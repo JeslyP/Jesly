@@ -18,8 +18,8 @@ Everything lives in `index.html`. Sections in order: hero, About, Skills, Projec
 | What | Where |
 | --- | --- |
 | Résumé | `assets/resume.pdf` (linked from the hero and Contact) |
-| Certificates | `assets/certificates/` (linked from the Certifications section) |
-| Photo | Loads from GitHub. To use your own, add `assets/photo.jpg` and update the hero `<img>` |
+| Certificates | `assets/certificates/` (linked from the Certifications section and the degree entry under Experience) |
+| Photo | `assets/photo.jpg` (square, at least 600×600). If missing, an initials badge shows instead |
 | Contact form | Create a free form at [formspree.io](https://formspree.io) and replace `YOUR_FORM_ID`. Until then the form opens the visitor's email client. |
 | Colors | `styles.css` — change the `--accent` tokens in `:root` |
 

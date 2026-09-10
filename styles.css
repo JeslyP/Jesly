@@ -373,6 +373,9 @@ html:not([data-theme="dark"]) .icon-moon { display: none; }
 .timeline__points { display: grid; gap: 0.45rem; margin-top: 0.75rem; padding-left: 1.1rem; list-style: disc; color: var(--muted); }
 .timeline__points li::marker { color: var(--accent); }
 
+.timeline__link { display: inline-block; margin-top: 0.85rem; font-weight: 600; font-size: 0.9rem; color: var(--accent); }
+.timeline__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
 /* ---------- Certifications ---------- */
 .certs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
 .cert {
