@@ -11,17 +11,15 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-## Make it yours
+## Editing content
 
-Search the code for `TODO` — every placeholder is marked. The main spots:
+Everything lives in `index.html`. Sections in order: hero, About, Skills, Projects, Experience, Certifications, Contact.
 
 | What | Where |
 | --- | --- |
-| Intro line, about paragraphs | `index.html` (hero + About) |
-| Your photo | Drop a square image at `assets/photo.jpg` and update the `<img>` in the hero |
-| Résumé | Put your PDF at `assets/resume.pdf` |
-| Skills, projects, experience | `index.html` — edit the lists and cards |
-| LinkedIn link | `index.html` — replace `YOUR-LINKEDIN` |
+| Résumé | `assets/resume.pdf` (linked from the hero and Contact) |
+| Certificates | `assets/certificates/` (linked from the Certifications section) |
+| Photo | Loads from GitHub. To use your own, add `assets/photo.jpg` and update the hero `<img>` |
 | Contact form | Create a free form at [formspree.io](https://formspree.io) and replace `YOUR_FORM_ID`. Until then the form opens the visitor's email client. |
 | Colors | `styles.css` — change the `--accent` tokens in `:root` |
 
