@@ -1,5 +1,5 @@
 /* ============================================================
-   Jesly Prosper — Portfolio interactions
+   Jesly Prosper | Portfolio interactions
    ============================================================ */
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
@@ -150,7 +150,7 @@
       e.preventDefault();
       const fd = new FormData(form);
       const subject = encodeURIComponent(`Portfolio message from ${fd.get("name")}`);
-      const body = encodeURIComponent(`${fd.get("message")}\n\n— ${fd.get("name")} (${fd.get("email")})`);
+      const body = encodeURIComponent(`${fd.get("message")}\n\nFrom ${fd.get("name")} (${fd.get("email")})`);
       window.location.href = `mailto:jeslyprosper@gmail.com?subject=${subject}&body=${body}`;
       return;
     }
@@ -166,7 +166,7 @@
       btn.textContent = "Message sent ✓";
       form.classList.add("is-sent");
     } catch {
-      btn.textContent = "Something went wrong — try email";
+      btn.textContent = "Something went wrong, please email me";
       btn.disabled = false;
       setTimeout(() => { btn.textContent = original; }, 3000);
     }
