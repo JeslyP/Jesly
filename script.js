@@ -146,12 +146,12 @@
   form?.addEventListener("submit", async (e) => {
     const action = form.getAttribute("action") || "";
     if (action.includes("YOUR_FORM_ID")) {
-      // Form isn't wired up yet: fall back to a mailto link so nothing is lost.
+      // Form isn't wired up yet: point visitors to LinkedIn instead of exposing an email address.
       e.preventDefault();
-      const fd = new FormData(form);
-      const subject = encodeURIComponent(`Portfolio message from ${fd.get("name")}`);
-      const body = encodeURIComponent(`${fd.get("message")}\n\nFrom ${fd.get("name")} (${fd.get("email")})`);
-      window.location.href = `mailto:jeslyprosper@gmail.com?subject=${subject}&body=${body}`;
+      const btn = $("button[type=submit]", form);
+      btn.textContent = "Opening LinkedIn…";
+      window.open("https://www.linkedin.com/in/jeslyprosper", "_blank", "noopener");
+      setTimeout(() => { btn.textContent = "Send message"; }, 2000);
       return;
     }
     e.preventDefault();
