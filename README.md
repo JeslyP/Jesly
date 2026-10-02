@@ -34,8 +34,9 @@ Everything lives in `index.html`. Sections in order: hero, About, Skills, Projec
 
 ## Features
 
+- Apple-inspired design: system font, generous white space, rounded tiles, one blue accent
 - Light and dark theme, remembered between visits
-- Smooth scroll, active-section highlighting, mobile menu
-- Scroll-reveal animations, animated counters, typewriter headline
-- 3D tilt on the hero card and a subtle cursor glow (desktop only)
+- Sticky translucent navigation with active-section highlighting and a full-screen mobile menu
+- Subtle scroll-reveal animations and animated counters
 - Fully responsive, keyboard accessible, respects reduced-motion preferences
+- Degree certificate offered as a small preview PDF plus the digitally signed original

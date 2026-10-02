@@ -1,5 +1,5 @@
 /* ============================================================
-   Jesly Prosper | Portfolio interactions
+   Jesly Prosper | Portfolio interactions (Apple-inspired)
    ============================================================ */
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
@@ -93,52 +93,6 @@
       entries.forEach((e) => { if (e.isIntersecting) { runCounter(e.target); cio.unobserve(e.target); } });
     }, { threshold: 0.5 });
     counters.forEach((c) => cio.observe(c));
-  }
-
-  /* ---------- Typewriter ---------- */
-  const typed = $(".typed");
-  if (typed && !prefersReduced) {
-    let words = [];
-    try { words = JSON.parse(typed.dataset.words || "[]"); } catch {}
-    if (words.length) {
-      let wi = 0, ci = words[0].length, deleting = false;
-      const step = () => {
-        const word = words[wi];
-        if (deleting) {
-          ci--;
-          typed.textContent = word.slice(0, ci);
-          if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(step, 400); return; }
-          setTimeout(step, 45);
-        } else {
-          ci++;
-          typed.textContent = word.slice(0, ci);
-          if (ci === word.length) { deleting = true; setTimeout(step, 2200); return; }
-          setTimeout(step, 80);
-        }
-      };
-      setTimeout(() => { deleting = true; step(); }, 2200);
-    }
-  }
-
-  /* ---------- Cursor glow + hero card tilt ---------- */
-  const glow = $(".cursor-glow");
-  const card = $(".hero__card");
-  if (!prefersReduced && window.matchMedia("(hover: hover)").matches) {
-    window.addEventListener("pointermove", (e) => {
-      glow?.style.setProperty("--mx", `${e.clientX}px`);
-      glow?.style.setProperty("--my", `${e.clientY}px`);
-    }, { passive: true });
-
-    if (card) {
-      const wrap = card.parentElement;
-      wrap.addEventListener("pointermove", (e) => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`;
-      });
-      wrap.addEventListener("pointerleave", () => { card.style.transform = ""; });
-    }
   }
 
   /* ---------- Contact form ---------- */
