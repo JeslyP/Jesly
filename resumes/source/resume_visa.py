@@ -32,7 +32,7 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 <div class="skills">
 <p><b>Business Operations:</b> Process improvement and automation, requirements gathering, business process mapping, data quality checks, cross-functional stakeholder communication</p>
 <p><b>Revenue &amp; Pricing Analysis:</b> Revenue and cost analysis, pricing analysis, revenue recognition principles, monthly financial reporting, KPI tracking, forecasting support</p>
-<p><b>Data &amp; Reporting:</b> Advanced Excel (pivot tables, complex formulas), PowerPoint, SQL, Python (Pandas), Tableau, data validation and reconciliation</p>
+<p><b>Data &amp; Reporting:</b> Advanced Excel (pivot tables, complex formulas), PowerPoint, Salesforce CRM fundamentals, SQL, Python (Pandas), Tableau, data validation and reconciliation</p>
 <p><b>AI Tools:</b> Everyday use of Claude and GitHub Copilot for analysis, reporting, and productivity</p>
 <p><b>Languages:</b> Fluent in English and Haitian Creole</p>
 </div>
@@ -42,10 +42,11 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 <div class="row"><span>Software Developer, D&amp;K Car Rentals LTD</span><span class="date">June 2023 to September 2025</span></div>
 <p class="sub">Grand Turk, Turks and Caicos Islands | {link("github.com/JeslyP/dk-car-rentals")}</p>
 <ul>
+<li>Built the booking-to-billing workflow for a live rental business: online booking requests approved into rentals in one click, an invoice for each rental showing the balance due, and every payment recorded by method and date received.</li>
+<li>Automated the monthly profit and loss statement, covering gross income, tax set aside, costs by category, and net profit per vehicle, with month-by-month history and CSV export, replacing manual bookkeeping from paper log sheets.</li>
 <li>Analysed booking, revenue, and cost data to identify trends and inefficiencies, turning findings into recommendations that directly informed pricing and fleet decisions.</li>
-<li>Automated monthly financial reporting and recurring processes, replacing manual work and improving accuracy, consistency, and turnaround.</li>
-<li>Designed, built, and solely maintained the booking, fleet, and financial reporting system that linked customer bookings to revenue reporting, and led its migration to a new platform while the business kept running.</li>
-<li>Acted as the link between non-technical stakeholders and the system, gathering requirements and turning them into working processes end to end.</li>
+<li>Built data controls so financial records could not be lost: deletions are reversible and kept for tax purposes, every entry is validated on the server, and 159 automated tests run before each release.</li>
+<li>Acted as the link between non-technical stakeholders and the system, gathering requirements and migrating the platform to Next.js and Supabase while the business kept running.</li>
 </ul>
 </div>
 <div class="entry">
