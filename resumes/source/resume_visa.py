@@ -36,7 +36,7 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 <div class="skills">
 <p><b>Business Operations:</b> Process improvement and automation, requirements gathering, business process mapping, data quality checks, cross-functional stakeholder communication</p>
 <p><b>Revenue &amp; Pricing Analysis:</b> Revenue and cost analysis, pricing analysis, monthly financial reporting, KPI tracking, forecasting support</p>
-<p><b>Data &amp; Reporting:</b> Advanced Excel (pivot tables, complex formulas), SQL, Python (Pandas), Tableau, data validation and reconciliation</p>
+<p><b>Data &amp; Reporting:</b> Advanced Excel (pivot tables, complex formulas), PowerPoint, SQL, Python (Pandas), Tableau, data validation and reconciliation</p>
 <p><b>AI Tools:</b> Everyday use of Claude and GitHub Copilot for analysis, reporting, and productivity</p>
 <p><b>Languages:</b> Fluent in English and Haitian Creole</p>
 </div>
@@ -44,7 +44,7 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 <h2>Experience</h2>
 <div class="entry">
 <div class="row"><span>Software Developer, D&amp;K Car Rentals LTD</span><span class="date">June 2023 to September 2025</span></div>
-<p class="sub">Grand Turk, Turks and Caicos Islands</p>
+<p class="sub">Grand Turk, Turks and Caicos Islands | {link("github.com/JeslyP/dk-car-rentals")}</p>
 <ul>
 <li>Analysed booking, revenue, and cost data to identify trends and inefficiencies, turning findings into recommendations that directly informed pricing and fleet decisions.</li>
 <li>Automated monthly financial reporting and recurring processes, replacing manual work and improving accuracy, consistency, and turnaround.</li>
