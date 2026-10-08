@@ -6,6 +6,7 @@
 | `jacobs-data-analyst.pdf` | Jacobs, Data Analyst |
 | `google-swe-sre-intern-2027.pdf` | Google, Software Engineering / SRE Intern 2027 |
 | `aviva-revenue-finance-analyst.pdf` | Aviva Investors, Revenue Finance Analyst |
+| `visa-business-operations-analyst.pdf` | Visa, Analyst (Business Operations) |
 
 ## Editing and rebuilding
 
