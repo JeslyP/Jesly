@@ -24,10 +24,6 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 
 <h2>Education</h2>
 <div class="entry">
-<div class="row"><span>MS in Analytics (OMSA)</span><span class="date">Expected Winter 2027</span></div>
-<p class="sub">Georgia Institute of Technology | Computational Data Analytics track</p>
-</div>
-<div class="entry">
 <div class="row"><span>BEng in Computer Science, 2:1 Honours</span><span class="date">June 2026</span></div>
 <p class="sub">University of York, United Kingdom | Award mark 63. Relevant coursework: Data Science, Software &amp; Systems Engineering, Human Factors: Technology in Context</p>
 </div>
