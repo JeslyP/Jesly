@@ -35,7 +35,7 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 <h2>Skills</h2>
 <div class="skills">
 <p><b>Business Operations:</b> Process improvement and automation, requirements gathering, business process mapping, data quality checks, cross-functional stakeholder communication</p>
-<p><b>Revenue &amp; Pricing Analysis:</b> Revenue and cost analysis, pricing analysis, monthly financial reporting, KPI tracking, forecasting support</p>
+<p><b>Revenue &amp; Pricing Analysis:</b> Revenue and cost analysis, pricing analysis, revenue recognition principles, monthly financial reporting, KPI tracking, forecasting support</p>
 <p><b>Data &amp; Reporting:</b> Advanced Excel (pivot tables, complex formulas), PowerPoint, SQL, Python (Pandas), Tableau, data validation and reconciliation</p>
 <p><b>AI Tools:</b> Everyday use of Claude and GitHub Copilot for analysis, reporting, and productivity</p>
 <p><b>Languages:</b> Fluent in English and Haitian Creole</p>
