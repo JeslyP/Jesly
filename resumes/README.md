@@ -7,6 +7,7 @@
 | `google-swe-sre-intern-2027.pdf` | Google, Software Engineering / SRE Intern 2027 |
 | `aviva-revenue-finance-analyst.pdf` | Aviva Investors, Revenue Finance Analyst |
 | `visa-business-operations-analyst.pdf` | Visa, Analyst (Business Operations) |
+| `10000-black-interns-data-tech.pdf` | 10,000 Black Interns, data and technology workstreams |
 
 ## Editing and rebuilding
 
