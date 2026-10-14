@@ -33,7 +33,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <div class="skills">
 <p><b>Languages:</b> TypeScript, JavaScript, Python, Java, SQL</p>
 <p><b>Back End &amp; Web Services:</b> REST API design, Next.js API routes, Flask, PostgreSQL, MS SQL Server, Supabase, authentication and input validation</p>
-<p><b>Testing &amp; Quality:</b> Vitest, automated unit testing, test planning, static type checking, debugging and troubleshooting, coding standards</p>
+<p><b>Testing &amp; Quality:</b> Vitest, automated unit testing, test planning, code review, static type checking, debugging and troubleshooting, coding standards</p>
 <p><b>Cloud &amp; Delivery:</b> GitHub Actions CI/CD, Vercel, AWS (Lambda, S3, EC2), Docker, Git, pull-request workflow, Agile (Jira)</p>
 <p><b>AI-Assisted Development:</b> Everyday use of Claude Code and GitHub Copilot for writing, debugging, and reviewing code</p>
 <p><b>Languages Spoken:</b> Fluent in English and Haitian Creole</p>
@@ -74,6 +74,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <p class="sub">{link("github.com/JeslyP/CampusTycoonBackend2")}</p>
 <ul>
 <li>Built a libGDX simulation game in Java using the Factory pattern and inheritance and polymorphism across class hierarchies, working in a 4-person Agile team with Jira and CI/CD and delivering on time.</li>
+<li>Reviewed teammates' code through pull requests, checking it against the team's coding standards and design before merging.</li>
 </ul>
 </div>
 <div class="entry">
