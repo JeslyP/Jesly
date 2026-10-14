@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Application Tracker | Jesly Prosper</title>
+  <meta name="description" content="A job application tracker with a pipeline funnel, conversion rates and follow-up reminders. Built in plain HTML, CSS and JavaScript by Jesly Prosper." />
+  <meta name="theme-color" content="#fbfbfd" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d1d1f'/><text x='50' y='69' font-size='54' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='600'>J</text></svg>" />
+  <script>
+    /* Apply the theme before paint, using the same "theme" key as the main portfolio. */
+    (() => {
+      let t = null;
+      try { t = localStorage.getItem("theme"); } catch {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <style>
+    /* Layout: back link and title, a demo notice, KPI row, pipeline funnel, then the application list. */
+    :root {
+      --bg: #ffffff; --bg-alt: #f5f5f7; --tile: #f5f5f7; --text: #1d1d1f; --muted: #6e6e73;
+      --faint: #86868b; --divider: #d2d2d7; --blue: #0071e3; --link: #0066cc; --field: #ffffff;
+      --s-todo: #6e6e73; --s-applied: #0066cc; --s-interview: #b25000; --s-offer: #1a7f37; --s-closed: #86868b;
+      --due: #c4161c; --due-soft: #fdecec; --bar: #0071e3; --bar-track: #e8e8ed;
+      --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    [data-theme="dark"] {
+      --bg: #000000; --bg-alt: #101010; --tile: #161617; --text: #f5f5f7; --muted: #a1a1a6;
+      --faint: #86868b; --divider: #424245; --blue: #0a84ff; --link: #2997ff; --field: #1d1d1f;
+      --s-todo: #a1a1a6; --s-applied: #2997ff; --s-interview: #ff9f0a; --s-offer: #30d158; --s-closed: #86868b;
+      --due: #ff6961; --due-soft: #3a1414; --bar: #0a84ff; --bar-track: #2c2c2e;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.47 var(--font); letter-spacing: -0.01em; }
+    .wrap { max-width: 980px; margin: 0 auto; padding-inline: 22px; padding-block: 28px 80px; display: flex; flex-direction: column; gap: 28px; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .back { font-size: 15px; }
+    h1 { font-size: clamp(34px, 5.5vw, 56px); line-height: 1.06; font-weight: 700; letter-spacing: -0.02em; margin: 8px 0 10px; text-wrap: balance; }
+    .lead { color: var(--muted); font-size: clamp(17px, 2vw, 21px); max-width: 60ch; margin: 0; }
+    .notice { background: var(--tile); border-radius: 14px; padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; font-size: 15px; color: var(--muted); }
+    .notice strong { color: var(--text); font-weight: 600; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; }
+    button { font: inherit; font-size: 15px; cursor: pointer; border-radius: 980px; padding: 8px 18px; border: 1px solid var(--divider); background: transparent; color: var(--text); }
+    button.primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 500; }
+    button.ghost { border-color: transparent; color: var(--link); padding: 6px 10px; }
+    button.danger { color: var(--due); }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .kpi { background: var(--tile); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; }
+    .kpi__n { font-size: clamp(26px, 3.6vw, 36px); font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .kpi__l { font-size: 14px; color: var(--muted); }
+    @media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+
+    .panel { background: var(--tile); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .panel h2 { font-size: 21px; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+    .panel p.note { margin: 0; font-size: 14px; color: var(--muted); }
+    .funnel { display: flex; flex-direction: column; gap: 12px; }
+    .stage { display: grid; grid-template-columns: 92px 1fr 64px; gap: 12px; align-items: center; font-size: 15px; }
+    .stage__track { height: 28px; background: var(--bar-track); border-radius: 8px; overflow: hidden; }
+    .stage__bar { height: 100%; background: var(--bar); border-radius: 8px; min-width: 2px; }
+    .stage__v { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; white-space: nowrap; }
+    .stage__v b { color: var(--text); font-weight: 600; }
+    @media (prefers-reduced-motion: no-preference) { .stage__bar { transition: width .5s cubic-bezier(0.28, 0.11, 0.32, 1); } }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { font-size: 14px; padding: 6px 14px; }
+    .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .list { display: flex; flex-direction: column; gap: 12px; }
+    .row { background: var(--tile); border-radius: var(--radius); padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; border: 1px solid transparent; }
+    .row.due { border-color: var(--due); }
+    .row__top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: flex-start; justify-content: space-between; }
+    .row__who { min-width: 0; flex: 1 1 260px; }
+    .row__co { font-size: 19px; font-weight: 600; margin: 0; }
+    .row__role { margin: 2px 0 0; color: var(--muted); font-size: 15px; overflow-wrap: anywhere; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 980px; border: 1px solid currentColor; }
+    .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .date { font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+    .date.is-due { color: var(--due); background: var(--due-soft); padding: 2px 8px; border-radius: 6px; }
+    .row__notes { margin: 0; font-size: 15px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .empty { text-align: center; color: var(--muted); padding: 28px; border: 1px dashed var(--divider); border-radius: var(--radius); }
+
+    form.edit { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+    form.edit .full { grid-column: 1 / -1; }
+    @media (max-width: 600px) { form.edit { grid-template-columns: 1fr; } }
+    label { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--muted); font-weight: 500; }
+    input, select, textarea { font: 16px var(--font); color: var(--text); background: var(--field); border: 1px solid var(--divider); border-radius: 10px; padding: 9px 12px; width: 100%; min-width: 0; }
+    textarea { min-height: 72px; resize: vertical; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .err { color: var(--due); margin: 0; font-size: 14px; }
+
+    .about { color: var(--muted); font-size: 15px; max-width: 70ch; }
+    .about h2 { color: var(--text); font-size: 21px; margin: 0 0 8px; }
+    .about ul { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div>
+      <a class="back" href="../../#projects">‹ Back to portfolio</a>
+      <h1>Job Application Tracker</h1>
+      <p class="lead">Track every application from shortlist to offer, see where the pipeline leaks, and never miss a follow-up.</p>
+    </div>
+
+    <div class="notice" role="note">
+      <span><strong>Demo data.</strong> These companies are fictional. Your changes are saved only in this browser.</span>
+      <div class="toolbar">
+        <button type="button" class="primary" id="add">Add application</button>
+        <button type="button" id="export">Export CSV</button>
+        <button type="button" id="reset">Reset demo</button>
+      </div>
+    </div>
+
+    <div id="new-form" hidden></div>
+
+    <section class="kpis" aria-label="Summary">
+      <div class="kpi"><span class="kpi__n" id="k-active">0</span><span class="kpi__l">Active applications</span></div>
+      <div class="kpi"><span class="kpi__n" id="k-response">0%</span><span class="kpi__l">Applied → interview</span></div>
+      <div class="kpi"><span class="kpi__n" id="k-offer">0%</span><span class="kpi__l">Interview → offer</span></div>
+      <div class="kpi"><span class="kpi__n" id="k-due">0</span><span class="kpi__l">Follow-ups due</span></div>
+    </section>
+
+    <section class="panel" aria-labelledby="funnel-h">
+      <h2 id="funnel-h">Pipeline funnel</h2>
+      <div class="funnel" id="funnel"></div>
+      <p class="note">Each application counts at the furthest stage it reached, so closed applications still show where they dropped out.</p>
+    </section>
+
+    <section aria-label="Applications" style="display:flex;flex-direction:column;gap:14px">
+      <div class="filters" id="filters" role="group" aria-label="Filter by status"></div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <section class="about">
+      <h2>How it works</h2>
+      Built in plain HTML, CSS and JavaScript with no libraries. Data is stored in the browser with
+      <code>localStorage</code>, so the page works offline and nothing is sent to a server.
+      <ul>
+        <li>Each record keeps its current status and the furthest stage it reached, which drives the funnel and conversion rates.</li>
+        <li>Follow-ups on or before today are flagged and sorted to the top.</li>
+        <li>Export CSV gives a clean table for analysis in SQL, Python, R or Power BI.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+  (() => {
+    const KEY = "jobTrackerDemo.v1";
+    const STATUSES = [
+      { k: "todo", l: "To apply", c: "var(--s-todo)", rank: 0 },
+      { k: "applied", l: "Applied", c: "var(--s-applied)", rank: 1 },
+      { k: "interview", l: "Interview", c: "var(--s-interview)", rank: 2 },
+      { k: "offer", l: "Offer", c: "var(--s-offer)", rank: 3 },
+      { k: "closed", l: "Closed", c: "var(--s-closed)", rank: -1 }
+    ];
+    const S = Object.fromEntries(STATUSES.map((s, i) => [s.k, { ...s, i }]));
+    const $ = (id) => document.getElementById(id);
+
+    const iso = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    const daysFromToday = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return iso(d); };
+    const today = () => iso(new Date());
+    const fmt = (s) => { if (!s) return ""; const d = new Date(s + "T12:00:00"); return isNaN(d) ? s : d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }); };
+    const uid = () => Math.random().toString(36).slice(2, 10);
+
+    function demoRows() {
+      return [
+        { company: "Northwind Payments", role: "Graduate Product Analyst", status: "interview", reached: 2, applied: daysFromToday(-18), followUp: daysFromToday(2), notes: "Take-home due Friday: A/B test write-up." },
+        { company: "Larkspur Bank", role: "Junior Fraud Analyst", status: "applied", reached: 1, applied: daysFromToday(-12), followUp: daysFromToday(-1), notes: "Recruiter said decisions within two weeks." },
+        { company: "Railpath", role: "Data Analyst, Partner Solutions", status: "todo", reached: 0, applied: "", followUp: "", notes: "Strong SQL plus Power BI. Tailor CV around B2B analysis." },
+        { company: "Meridian Health Data", role: "Insights Analyst", status: "offer", reached: 3, applied: daysFromToday(-34), followUp: daysFromToday(4), notes: "Offer received. Reply by the follow-up date." },
+        { company: "Copperfield Retail", role: "Junior Data Analyst", status: "closed", reached: 2, applied: daysFromToday(-40), followUp: "", notes: "Rejected after final round. Asked for feedback." },
+        { company: "Tidewater Energy", role: "Graduate Data Engineer", status: "closed", reached: 1, applied: daysFromToday(-30), followUp: "", notes: "No response after three weeks." },
+        { company: "Brightline Insurance", role: "Risk Analyst", status: "applied", reached: 1, applied: daysFromToday(-5), followUp: daysFromToday(5), notes: "" },
+        { company: "Harbour Analytics", role: "Graduate Data Consultant", status: "todo", reached: 0, applied: "", followUp: "", notes: "January cohort. Applications close end of month." }
+      ].map((r) => ({ id: uid(), link: "", ...r }));
+    }
+
+    let rows = [];
+    function load() {
+      try { const raw = localStorage.getItem(KEY); if (raw) { rows = JSON.parse(raw); if (Array.isArray(rows)) return; } } catch {}
+      rows = demoRows();
+    }
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(rows)); } catch {} }
+
+    let filter = null, editing = null;
+    const isDue = (r) => r.followUp && r.status !== "closed" && r.followUp <= today();
+
+    function el(tag, attrs = {}, ...kids) {
+      const e = document.createElement(tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        if (k === "class") e.className = v;
+        else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+        else if (v !== false && v != null) e.setAttribute(k, v === true ? "" : v);
+      }
+      for (const k of kids.flat()) if (k != null && k !== false) e.append(k);
+      return e;
+    }
+
+    function renderStats() {
+      const reached = (n) => rows.filter((r) => (r.reached || 0) >= n).length;
+      const applied = reached(1), interview = reached(2), offer = reached(3);
+      const pct = (a, b) => (b ? Math.round((a / b) * 100) + "%" : "–");
+      $("k-active").textContent = rows.filter((r) => ["applied", "interview", "offer"].includes(r.status)).length;
+      $("k-response").textContent = pct(interview, applied);
+      $("k-offer").textContent = pct(offer, interview);
+      $("k-due").textContent = rows.filter(isDue).length;
+
+      const stages = [
+        { l: "Shortlisted", n: rows.length },
+        { l: "Applied", n: applied },
+        { l: "Interview", n: interview },
+        { l: "Offer", n: offer }
+      ];
+      const max = Math.max(1, stages[0].n);
+      const f = $("funnel"); f.replaceChildren();
+      stages.forEach((s, i) => {
+        const prev = i ? stages[i - 1].n : null;
+        const conv = i && prev ? " · " + Math.round((s.n / prev) * 100) + "%" : "";
+        f.append(el("div", { class: "stage" },
+          el("span", {}, s.l),
+          el("div", { class: "stage__track", role: "img", "aria-label": s.l + ": " + s.n },
+            el("div", { class: "stage__bar", style: "width:" + (s.n / max) * 100 + "%" })),
+          el("span", { class: "stage__v" }, el("b", {}, String(s.n)), conv)));
+      });
+    }
+
+    function renderFilters() {
+      const f = $("filters"); f.replaceChildren();
+      f.append(el("button", { type: "button", class: "chip", "aria-pressed": String(filter === null), onclick: () => { filter = null; render(); } }, "All " + rows.length));
+      for (const s of STATUSES) {
+        const n = rows.filter((r) => r.status === s.k).length;
+        f.append(el("button", { type: "button", class: "chip", "aria-pressed": String(filter === s.k), onclick: () => { filter = filter === s.k ? null : s.k; render(); } }, s.l + " " + n));
+      }
+    }
+
+    function formFor(r, onSave, onCancel) {
+      const key = r.id || "new";
+      const f = el("form", { class: "edit" });
+      const field = (name, label, type = "text", cls = "") =>
+        el("label", { class: cls, for: key + "-" + name }, label, el("input", { id: key + "-" + name, name, type, value: r[name] || "" }));
+      const status = el("select", { id: key + "-status", name: "status" },
+        ...STATUSES.map((s) => el("option", { value: s.k, selected: (r.status || "todo") === s.k }, s.l)));
+      f.append(
+        field("company", "Company"), field("role", "Role"), field("link", "Listing link", "url", "full"),
+        el("label", { for: key + "-status" }, "Status", status),
+        field("applied", "Applied on", "date"), field("followUp", "Follow up on", "date"),
+        el("label", { class: "full", for: key + "-notes" }, "Notes", el("textarea", { id: key + "-notes", name: "notes" }, r.notes || ""))
+      );
+      const err = el("p", { class: "err full", hidden: true });
+      const actions = el("div", { class: "actions full" });
+      if (r.id) {
+        const del = el("button", { type: "button", class: "danger" }, "Delete");
+        del.addEventListener("click", () => {
+          if (del.dataset.armed) { rows = rows.filter((x) => x.id !== r.id); editing = null; save(); render(); }
+          else { del.dataset.armed = "1"; del.textContent = "Click again to delete"; }
+        });
+        actions.append(del);
+      }
+      actions.append(el("button", { type: "button", class: "ghost", onclick: onCancel }, "Cancel"), el("button", { type: "submit", class: "primary" }, "Save"));
+      f.append(err, actions);
+      f.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const d = Object.fromEntries(new FormData(f).entries());
+        if (!d.company.trim()) { err.textContent = "Add a company name to save."; err.hidden = false; return; }
+        const rank = S[d.status].rank;
+        onSave({
+          company: d.company.trim(), role: d.role.trim(), link: d.link.trim(), status: d.status,
+          applied: d.applied || (rank >= 1 && !r.applied ? today() : r.applied || ""),
+          followUp: d.followUp, notes: d.notes.trim(),
+          reached: Math.max(r.reached || 0, rank)
+        });
+      });
+      return f;
+    }
+
+    function renderList() {
+      const list = $("list"); list.replaceChildren();
+      const view = rows.filter((r) => !filter || r.status === filter).sort((a, b) =>
+        (isDue(b) - isDue(a)) || (S[a.status].i - S[b.status].i) ||
+        (a.followUp || "9").localeCompare(b.followUp || "9") || a.company.localeCompare(b.company));
+      if (!rows.length) { list.append(el("div", { class: "empty" }, "No applications yet. Add one, or reset the demo.")); return; }
+      if (!view.length) { list.append(el("div", { class: "empty" }, "Nothing in this status yet.")); return; }
+      for (const r of view) {
+        const s = S[r.status], due = isDue(r);
+        const row = el("article", { class: "row" + (due ? " due" : "") });
+        if (editing === r.id) {
+          row.append(formFor(r, (d) => { Object.assign(r, d); editing = null; save(); render(); }, () => { editing = null; render(); }));
+        } else {
+          const role = el("p", { class: "row__role" }, r.role || "");
+          if (r.link) role.append(r.role ? " · " : "", el("a", { href: r.link, target: "_blank", rel: "noopener" }, "Listing"));
+          row.append(
+            el("div", { class: "row__top" },
+              el("div", { class: "row__who" }, el("h3", { class: "row__co" }, r.company), role),
+              el("button", { type: "button", class: "ghost", onclick: () => { editing = r.id; render(); } }, "Edit")),
+            el("div", { class: "meta" },
+              el("span", { class: "pill", style: "color:" + s.c }, s.l),
+              r.applied ? el("span", { class: "date" }, "Applied " + fmt(r.applied)) : null,
+              r.followUp ? el("span", { class: "date" + (due ? " is-due" : "") }, (due ? "Follow-up due " : "Follow up ") + fmt(r.followUp)) : null)
+          );
+          if (r.notes) row.append(el("p", { class: "row__notes" }, r.notes));
+        }
+        list.append(row);
+      }
+    }
+
+    function render() { renderStats(); renderFilters(); renderList(); }
+
+    $("add").addEventListener("click", () => {
+      const box = $("new-form");
+      if (!box.hidden) { box.hidden = true; box.replaceChildren(); return; }
+      const wrap = el("article", { class: "row" });
+      const close = () => { box.hidden = true; box.replaceChildren(); };
+      wrap.append(formFor({ status: "todo" }, (d) => { rows.push({ id: uid(), ...d }); save(); close(); render(); }, close));
+      box.replaceChildren(wrap); box.hidden = false;
+      box.querySelector("input")?.focus();
+    });
+
+    const reset = $("reset");
+    reset.addEventListener("click", () => {
+      if (!reset.dataset.armed) { reset.dataset.armed = "1"; reset.textContent = "Click again to reset"; return; }
+      delete reset.dataset.armed; reset.textContent = "Reset demo";
+      rows = demoRows(); filter = null; editing = null; save(); render();
+    });
+
+    $("export").addEventListener("click", () => {
+      const cols = ["company", "role", "status", "reached_stage", "applied", "followUp", "link", "notes"];
+      const stageName = (n) => ["shortlisted", "applied", "interview", "offer"][n || 0];
+      const esc = (v) => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+      const lines = [cols.join(",")].concat(rows.map((r) =>
+        [r.company, r.role, r.status, stageName(r.reached), r.applied, r.followUp, r.link, r.notes].map(esc).join(",")));
+      const url = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv" }));
+      const a = el("a", { href: url, download: "applications.csv" });
+      document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    load(); render();
+  })();
+  </script>
+</body>
+</html>
