@@ -10,6 +10,7 @@
 | `10000-black-interns-data-tech.pdf` | 10,000 Black Interns, data and technology workstreams |
 | `microsoft-partner-solutions-architect.pdf` | Microsoft, Partner Solutions Architect (AI/Apps) |
 | `trainline-data-analyst.pdf` | Trainline, Data Analyst (Partner Solutions) |
+| `visa-software-engineer.pdf` | Visa, Software Engineer (Reading) |
 
 ## Editing and rebuilding
 
