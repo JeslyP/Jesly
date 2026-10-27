@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NHS Appointments Analysis | Jesly Prosper</title>
+  <meta name="description" content="Case study: a normalised SQLite database built from six NHS datasets, statistical tests and models on 557k appointments, and an honest negative result. By Jesly Prosper." />
+  <meta name="theme-color" content="#fbfbfd" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d1d1f'/><text x='50' y='69' font-size='54' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='600'>J</text></svg>" />
+  <script>
+    /* Apply the theme before paint, using the same "theme" key as the main portfolio. */
+    (() => {
+      let t = null;
+      try { t = localStorage.getItem("theme"); } catch {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="stylesheet" href="../case-study.css" />
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="../../#projects">&#8249; Back to projects</a>
+
+    <p class="kicker">University of York · Data Science coursework · May 2025</p>
+    <h1>Sometimes the answer is "the data can't tell you."</h1>
+    <p class="lead">
+      I turned six raw NHS datasets into a clean relational database, then tested what drives cancelled
+      appointments. The honest finding was that none of the recorded factors predict it, and the useful
+      result came from somewhere else.
+    </p>
+    <ul class="chips">
+      <li>Python</li><li>Pandas</li><li>SQL</li><li>SQLite</li><li>SciPy</li><li>Scikit-learn</li><li>Matplotlib</li>
+    </ul>
+    <div class="actions">
+      <a class="link-more" href="https://github.com/JeslyP/NHS-Data-Science-Project-" target="_blank" rel="noopener">View the code</a>
+    </div>
+
+    <ul class="stats">
+      <li><strong>556,692</strong><span>appointments modelled</span></li>
+      <li><strong>400,000</strong><span>patients</span></li>
+      <li><strong>2% → 15%</strong><span>of patients make 15% of appointments</span></li>
+    </ul>
+
+    <h2>The data</h2>
+    <p>
+      The coursework gave six raw CSV files covering appointments, billing, insurance, prescriptions, surgery and test
+      records. Between them they describe 556,692 appointments for 400,000 patients across 252 hospitals,
+      3,143 departments and 27,752 healthcare professionals.
+    </p>
+
+    <h2>Building the database</h2>
+    <ul class="points">
+      <li>Designed an entity-relationship diagram in Chen notation to map how patients, appointments, professionals, departments and hospitals relate.</li>
+      <li>Normalised the data to third normal form (3NF) and loaded it into SQLite, so every fact is stored once and joins are reliable.</li>
+      <li>Wrote SQL reports with outer joins, for example hospitals per city, departments per hospital and preferred patients.</li>
+    </ul>
+
+    <h2>Fixing the question first</h2>
+    <p>
+      The original notebook filtered on a <code>No-Show</code> status, but the data doesn't have one: appointments are only
+      <em>Completed</em>, <em>Cancelled</em> or <em>Scheduled</em>. That filter silently returned nothing. I fixed it and used
+      cancellation as the closest available measure, giving 500,830 completed or cancelled appointments with a
+      10.0% cancellation rate.
+    </p>
+
+    <h2>Testing for drivers</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>What I tested</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Chi-square + Cramér's V</td><td>Age, gender, weekday, hour, department and hospital against cancellation</td><td>No association: all p &gt; 0.2, V &lt; 0.03</td></tr>
+          <tr><td>Logistic regression (class-weighted)</td><td>Predicting cancellation from those attributes</td><td>ROC-AUC 0.50, no better than chance</td></tr>
+          <tr><td>K-means clustering</td><td>Grouping patients by how they use services (k = 3, silhouette 0.66)</td><td>A small, very heavy-use group</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      An AUC of 0.50 means the model is guessing. Rather than tune it until a number looked impressive, I reported that
+      these attributes carry no signal and named the data that would: how far ahead the appointment was booked, and each
+      patient's past attendance.
+    </p>
+
+    <h2>The useful finding</h2>
+    <p>
+      Clustering found that <strong>2% of patients (6,337 people) account for about 15% of all appointments</strong>.
+      For planning, that small group matters far more than demographics: it's where follow-up, reminders or care
+      coordination would have the biggest effect.
+    </p>
+
+    <h2>Ethics</h2>
+    <p>
+      Health data is sensitive, so the project includes an ethics analysis alongside the technical work. A model with
+      no predictive power is also a reminder of why results like this should never drive decisions about individual patients.
+    </p>
+
+    <h2>What I learned</h2>
+    <div class="lesson"><h3>Check the data before the model.</h3><p>The biggest bug was a status that didn't exist. Looking at the actual values first would have caught it immediately.</p></div>
+    <div class="lesson"><h3>A negative result is still a result.</h3><p>"These fields can't predict cancellations" is a real, useful answer, as long as you say what data would.</p></div>
+    <div class="lesson"><h3>Good schema design pays off.</h3><p>Once the data was normalised, every later query and analysis was simpler and more trustworthy.</p></div>
+
+    <footer>
+      <a href="../../#projects">&#8249; All projects</a>
+      <span>Jesly Prosper</span>
+    </footer>
+  </main>
+</body>
+</html>

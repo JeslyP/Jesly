@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIFAR-10 Classifier | Jesly Prosper</title>
+  <meta name="description" content="Case study: a convolutional neural network built from scratch in PyTorch to classify CIFAR-10 images, with per-class results. By Jesly Prosper." />
+  <meta name="theme-color" content="#fbfbfd" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d1d1f'/><text x='50' y='69' font-size='54' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='600'>J</text></svg>" />
+  <script>
+    /* Apply the theme before paint, using the same "theme" key as the main portfolio. */
+    (() => {
+      let t = null;
+      try { t = localStorage.getItem("theme"); } catch {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="stylesheet" href="../case-study.css" />
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="../../#projects">&#8249; Back to projects</a>
+
+    <p class="kicker">University of York · Machine Learning &amp; Optimisation (IMLO) · May 2025</p>
+    <h1>Teaching a network to tell a cat from a dog.</h1>
+    <p class="lead">
+      A convolutional neural network built from scratch in PyTorch, with no pre-trained weights, that sorts
+      small 32×32 photos into ten classes: planes, cars, birds, cats, deer, dogs, frogs, horses, ships and trucks.
+    </p>
+    <ul class="chips">
+      <li>Python</li><li>PyTorch</li><li>torchvision</li><li>CNNs</li>
+    </ul>
+    <div class="actions">
+      <a class="link-more" href="https://github.com/JeslyP/IMLOCW" target="_blank" rel="noopener">View the code</a>
+    </div>
+
+    <ul class="stats">
+      <li><strong>79.3%</strong><span>test accuracy (10 classes)</span></li>
+      <li><strong>10,000</strong><span>unseen test images</span></li>
+      <li><strong>20</strong><span>training epochs, CPU only</span></li>
+    </ul>
+
+    <h2>The problem</h2>
+    <p>
+      CIFAR-10 has 60,000 tiny colour images. Guessing at random gets 10% right. The rules of the coursework were to
+      design and train my own network, without borrowing a model someone else had already trained, and to run on a CPU.
+    </p>
+
+    <h2>The model</h2>
+    <p>Three convolution blocks pick out increasingly complex shapes, then two fully connected layers make the decision.</p>
+    <pre>Conv 3→32   → BatchNorm → ReLU → MaxPool    32×32 → 16×16
+Conv 32→64  → BatchNorm → ReLU → MaxPool    16×16 → 8×8
+Conv 64→128 → BatchNorm → ReLU → MaxPool    8×8   → 4×4
+Flatten (2,048) → Linear 256 → ReLU → Dropout 0.5 → Linear 10</pre>
+    <ul class="cards">
+      <li><h3>Batch normalisation</h3><p>Keeps each layer's outputs on a steady scale, so training is faster and more stable.</p></li>
+      <li><h3>Dropout</h3><p>Randomly switches off half the neurons in the dense layer during training so the network can't just memorise images.</p></li>
+      <li><h3>Data augmentation</h3><p>Training images are randomly flipped and shifted, so the model sees a slightly different picture every epoch.</p></li>
+      <li><h3>Learning-rate schedule</h3><p>Adam starting at 0.001, halved every 10 epochs, so the model takes big steps early and fine steps late.</p></li>
+    </ul>
+
+    <h2>Training and validation</h2>
+    <p>
+      I split the 50,000 training images 40,000 / 10,000 into training and validation sets, with a fixed random seed
+      so the split is reproducible. The official 10,000-image test set was kept aside and only used at the end. Validation
+      loss and accuracy were logged every epoch and a checkpoint was saved every 5 epochs.
+    </p>
+
+    <h2>Results by class</h2>
+    <p>Re-measured from the saved model on the full test set.</p>
+    <ul class="bars" aria-label="Test accuracy by class">
+      <li><span>Ship</span><span class="track"><span class="fill" style="width:90.5%"></span></span><span class="val">90.5%</span></li>
+      <li><span>Frog</span><span class="track"><span class="fill" style="width:88.8%"></span></span><span class="val">88.8%</span></li>
+      <li><span>Car</span><span class="track"><span class="fill" style="width:87.0%"></span></span><span class="val">87.0%</span></li>
+      <li><span>Truck</span><span class="track"><span class="fill" style="width:86.9%"></span></span><span class="val">86.9%</span></li>
+      <li><span>Plane</span><span class="track"><span class="fill" style="width:83.3%"></span></span><span class="val">83.3%</span></li>
+      <li><span>Deer</span><span class="track"><span class="fill" style="width:82.5%"></span></span><span class="val">82.5%</span></li>
+      <li><span>Dog</span><span class="track"><span class="fill" style="width:77.5%"></span></span><span class="val">77.5%</span></li>
+      <li><span>Horse</span><span class="track"><span class="fill" style="width:76.1%"></span></span><span class="val">76.1%</span></li>
+      <li><span>Bird</span><span class="track"><span class="fill" style="width:70.4%"></span></span><span class="val">70.4%</span></li>
+      <li class="is-low"><span>Cat</span><span class="track"><span class="fill" style="width:49.9%"></span></span><span class="val">49.9%</span></li>
+    </ul>
+    <p style="margin-top:16px">
+      Vehicles and frogs are easy: they have distinctive shapes and colours. Cats are by far the hardest. At 32×32 pixels
+      a cat, a dog and a small deer look very alike, so that's where most mistakes happen.
+    </p>
+
+    <h2>What I'd do next</h2>
+    <div class="lesson"><h3>Go deeper where it's weakest.</h3><p>A fourth convolution block or residual connections would help separate cats from dogs.</p></div>
+    <div class="lesson"><h3>Train for longer on a GPU.</h3><p>Training was capped at 20 epochs on a CPU. More epochs and a GPU would show how much headroom the model still has.</p></div>
+    <div class="lesson"><h3>Look at the confusion matrix, not just the score.</h3><p>The per-class breakdown above says more about the model than one overall number.</p></div>
+
+    <footer>
+      <a href="../../#projects">&#8249; All projects</a>
+      <span>Jesly Prosper</span>
+    </footer>
+  </main>
+</body>
+</html>

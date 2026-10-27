@@ -65,6 +65,13 @@ td code { white-space: nowrap; }
 .lesson { border-left: 3px solid var(--blue); padding: 4px 0 4px 16px; margin: 0 0 18px; }
 .lesson p { color: var(--muted); margin: 0; }
 
+.bars { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.bars li { display: grid; grid-template-columns: 96px 1fr 52px; align-items: center; gap: 12px; font-size: 15px; }
+.bars .track { height: 10px; border-radius: 980px; background: var(--divider); overflow: hidden; }
+.bars .fill { display: block; height: 100%; border-radius: inherit; background: var(--blue); }
+.bars .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.bars li.is-low .fill { background: var(--faint); }
+
 footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--divider); font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 
 @media (max-width: 640px) {
