@@ -112,7 +112,7 @@
       <div class="wrap">
         <p class="eyebrow reveal">Projects</p>
         <h2 class="headline reveal">Things I've built.</h2>
-        <p class="subhead reveal">Production systems, machine learning, robotics, a game, and analytics tools, all built end to end.</p>
+        <p class="subhead reveal">Production systems, fraud detection, machine learning, robotics, a game, and analytics tools, all built end to end.</p>
 
         <div class="tiles">
           <article class="tile tile--dark tile--wide reveal">
@@ -126,6 +126,24 @@
             </p>
             <p class="tile__tech">Python · Flask · SQL Server · Next.js · Supabase · Financial reporting</p>
             <a class="link-more" href="https://github.com/JeslyP/dk-car-rentals" target="_blank" rel="noopener">View code</a>
+          </article>
+
+          <article class="tile tile--wide reveal">
+            <p class="tile__kicker">Personal project · Oct 2026</p>
+            <h3 class="tile__title">Credit card fraud detection.</h3>
+            <p class="tile__text">
+              A model that flags fraudulent card transactions while keeping false alarms low, tested the way a fraud team would:
+              trained on earlier transactions and evaluated on the latest 20% it had never seen. Out of 284,807 transactions,
+              only 0.17% are fraud, so I judged it on precision, recall and PR-AUC rather than accuracy, and set the alert
+              threshold by the cost of missed fraud versus manual reviews.
+            </p>
+            <p class="tile__text">
+              It caught 85% of fraud (63 of 74) while flagging just 0.5% of genuine transactions, with a PR-AUC of 0.746.
+              The estimated fraud losses fell from €7,728 to €3,757, a 51% saving. Recall drifted from 95% to 64% across
+              the test period, the signal that would trigger retraining in production.
+            </p>
+            <p class="tile__tech">Python · scikit-learn · Logistic regression · Gradient boosting · PR-AUC · Cost-based thresholds</p>
+            <a class="link-more" href="https://github.com/JeslyP/credit-card-fraud-detection" target="_blank" rel="noopener">View code</a>
           </article>
 
           <article class="tile reveal">
