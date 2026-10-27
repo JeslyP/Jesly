@@ -40,6 +40,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <p><b>AI &amp; Automation:</b> Everyday use of Claude and GitHub Copilot to speed up analysis code, plus automation of recurring reporting and day-to-day processes</p>
 <p><b>Commercial Analysis:</b> Revenue, cost, and pricing analysis, KPI tracking, forecasting support, requirements gathering, stakeholder communication</p>
 <p><b>Data Platforms &amp; Engineering:</b> Supabase, Snowflake, AWS, Git, CI/CD, Next.js</p>
+<p><b>Certifications:</b> Introduction to Business Analysis (IIBA-accredited), FP&amp;A Foundations, CFI Corporate Finance Foundations, Salesforce Essential Training, The Legend of Python</p>
 <p><b>Languages:</b> Fluent in English and Haitian Creole</p>
 </div>
 
@@ -87,13 +88,6 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 </ul>
 </div>
 
-<div class="certs entry"><h2>Certifications</h2>
-<div class="row"><span>Introduction to Business Analysis, LinkedIn Learning (IIBA-accredited)</span><span class="date">Aug 2026</span></div>
-<div class="row"><span>Financial Planning and Analysis (FP&amp;A) Foundations, LinkedIn Learning</span><span class="date">Aug 2026</span></div>
-<div class="row"><span>CFI Corporate Finance Foundations Professional Certificate, LinkedIn Learning</span><span class="date">Aug 2026</span></div>
-<div class="row"><span>Salesforce Essential Training, LinkedIn Learning</span><span class="date">Oct 2026</span></div>
-<div class="row"><span>The Legend of Python, Codédex</span><span class="date">Feb 2025</span></div>
-</div>
 </body></html>"""
 open(f"{S}/resume-trainline.html","w").write(html)
 print("written")
