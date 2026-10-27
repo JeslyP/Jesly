@@ -83,7 +83,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <div class="row"><span>CIFAR-10 Image Classification, PyTorch (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/IMLOCW")}</p>
 <ul>
-<li>Built a CNN from scratch, achieving 81% test accuracy on a 40,000/10,000/10,000 train/validation/test split.</li>
+<li>Built a CNN from scratch, achieving 79% test accuracy on a 40,000/10,000/10,000 train/validation/test split.</li>
 </ul>
 </div>
 

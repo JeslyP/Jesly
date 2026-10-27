@@ -82,7 +82,7 @@ html = f"""<!doctype html><html><head><meta charset="utf-8"><title>Jesly Prosper
 <div class="row"><span>CIFAR-10 Image Classification, PyTorch (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/IMLOCW")}</p>
 <ul>
-<li>Built a CNN from scratch in PyTorch (three convolutional blocks with batch normalisation and dropout, trained with Adam and a scheduled learning rate over 20 epochs), achieving 81% test accuracy on a 40,000/10,000/10,000 train/validation/test split.</li>
+<li>Built a CNN from scratch in PyTorch (three convolutional blocks with batch normalisation and dropout, trained with Adam and a scheduled learning rate over 20 epochs), achieving 79% test accuracy on a 40,000/10,000/10,000 train/validation/test split.</li>
 </ul>
 </div>
 <div class="entry">

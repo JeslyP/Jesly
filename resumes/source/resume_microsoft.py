@@ -73,7 +73,7 @@ html = f"""<!doctype html><html><head><meta charset="utf-8"><title>Jesly Prosper
 <div class="row"><span>CIFAR-10 Image Classification, PyTorch (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/IMLOCW")}</p>
 <ul>
-<li>Built a CNN from scratch with batch normalisation and dropout, trained with Adam and a scheduled learning rate, achieving 81% test accuracy.</li>
+<li>Built a CNN from scratch with batch normalisation and dropout, trained with Adam and a scheduled learning rate, achieving 79% test accuracy.</li>
 </ul>
 </div>
 <div class="entry">

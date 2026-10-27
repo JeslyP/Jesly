@@ -112,7 +112,7 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 <div class="row"><span>CIFAR-10 Image Classification (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/IMLOCW")}</p>
 <ul>
-<li>Built a CNN from scratch in PyTorch (three convolutional blocks with batch normalisation and dropout, trained with Adam and a scheduled learning rate over 20 epochs), achieving 81% test accuracy on a 40,000/10,000/10,000 train/validation/test split.</li>
+<li>Built a CNN from scratch in PyTorch (three convolutional blocks with batch normalisation and dropout, trained with Adam and a scheduled learning rate over 20 epochs), achieving 79% test accuracy on a 40,000/10,000/10,000 train/validation/test split.</li>
 </ul>
 </div>
 <div class="entry">

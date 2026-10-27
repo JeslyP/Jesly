@@ -21,6 +21,7 @@ Last verified: 27 October 2026.
 | Built a model that predicts no-shows | ROC-AUC 0.50, which is chance. The finding is that the attributes can't predict cancellation |
 | "Flagged overfitting" on the NHS model | Not what happened; that note came from a broken earlier version |
 | The data had a "no-show" status | It only has Completed / Cancelled / Scheduled; cancellation was the proxy |
+| CIFAR-10 model reached 81% | 79% (79.3%). 81% is not reproducible from the saved model |
 | "Production-grade" / "end-to-end ML pipeline" for coursework | University coursework project |
 
 ## Contact and status
@@ -70,7 +71,7 @@ github.com/JeslyP/AUROJES2025. Tools: Python, ROS2, Nav2, Gazebo, Docker
 ### CIFAR-10 Image Classification, University of York (May 2025)
 github.com/JeslyP/IMLOCW. Tools: Python, PyTorch
 - CNN built from scratch: 3 convolutional blocks with batch norm and dropout, Adam, scheduled learning rate, 20 epochs.
-- **81% test accuracy** on a 40k / 10k / 10k train / validation / test split.
+- **79% test accuracy** (79.3%, re-measured from the saved `model.pth` on the 10,000-image test set) on a 40k / 10k / 10k train / validation / test split. Per class: ship 90.5% best, cat 49.9% worst.
 
 ### Campus Tycoon, Java Simulation Game, University of York (December 2024)
 github.com/JeslyP/CampusTycoonBackend2. Tools: Java, libGDX, JUnit, GitHub Actions, Jira
