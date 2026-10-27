@@ -81,7 +81,6 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <ul>
 <li>Built a libGDX city simulation game in Java, using the Factory pattern for building types and inheritance and polymorphism across building and event class hierarchies.</li>
 <li>Coordinated a 4-person Agile team with Jira and delivered on time with CI/CD integration.</li>
-<li>Diagnosed why the project's JUnit tests had never run (wrong source set), fixed an OpenGL initialisation bug they exposed, and added a GitHub Actions pipeline that builds and runs all tests on every push.</li>
 </ul>
 </div>
 <div class="entry">

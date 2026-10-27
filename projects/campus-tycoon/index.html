@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Tycoon | Jesly Prosper</title>
+  <meta name="description" content="Case study: Campus Tycoon, a five-minute university-building simulation in Java and libGDX, built by a four-person Agile team. By Jesly Prosper." />
+  <meta name="theme-color" content="#fbfbfd" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d1d1f'/><text x='50' y='69' font-size='54' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='600'>J</text></svg>" />
+  <script>
+    /* Apply the theme before paint, using the same "theme" key as the main portfolio. */
+    (() => {
+      let t = null;
+      try { t = localStorage.getItem("theme"); } catch {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="stylesheet" href="../case-study.css" />
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="../../#projects">&#8249; Back to projects</a>
+
+    <p class="kicker">University of York · Software Engineering (ENG1) · Dec 2024</p>
+    <h1>Five minutes to build a university.</h1>
+    <p class="lead">
+      Campus Tycoon is a simulation game made in Java with libGDX by a four-person team. You place buildings on a map
+      of York, react to random events, and try to keep student satisfaction high before the clock runs out.
+    </p>
+    <ul class="chips">
+      <li>Java 17</li><li>libGDX</li><li>Gradle</li><li>JUnit 5</li><li>GitHub Actions</li><li>Jira</li>
+    </ul>
+    <div class="actions">
+      <a class="link-more" href="https://github.com/JeslyP/CampusTycoonBackend2" target="_blank" rel="noopener">View the code</a>
+    </div>
+
+    <ul class="stats">
+      <li><strong>6</strong><span>building types</span></li>
+      <li><strong>3</strong><span>random events</span></li>
+      <li><strong>4</strong><span>people on the team</span></li>
+    </ul>
+
+    <h2>The game</h2>
+    <p>
+      A 300-second timer starts as soon as you begin. Accommodation, study spaces, cafeterias, restaurants and
+      relaxation buildings each cost money and change student satisfaction. Partway through, a random event fires:
+      a student strike, a donation, or a campus cat. Your satisfaction score when the timer hits zero is your final
+      score, and the best scores are saved to a leaderboard.
+    </p>
+
+    <h2>How it's built</h2>
+    <ul class="cards">
+      <li><h3>Class hierarchies</h3><p>Every building extends a shared <code>Building</code> class and every event extends <code>Event</code>, so adding a new one means one small class, not changes across the codebase.</p></li>
+      <li><h3>Factory-style creation</h3><p>The timer pulls the next event from a shuffled queue and creates the matching <code>Event</code> subclass, keeping event logic out of the game loop.</p></li>
+      <li><h3>Tile map</h3><p>The York map is loaded from a text file into grass, lake and mountain tiles, with placement rules and a movable camera.</p></li>
+      <li><h3>Persistent leaderboard</h3><p>Scores are stored with libGDX <code>Preferences</code>, so they survive between sessions on any desktop OS.</p></li>
+    </ul>
+
+    <h2>Team and process</h2>
+    <p>
+      We worked in short sprints with tasks tracked in Jira, and I coordinated the four of us so features landed in
+      time for each deliverable. Architecture was planned in PlantUML diagrams kept alongside the code.
+    </p>
+
+    <h2>Revisiting the code</h2>
+    <p>
+      Looking back at the repository in 2026, I found the unit tests had been written but never actually ran: they
+      lived in the main source folder, so Gradle skipped them and JUnit was being bundled into the game itself.
+      Fixing it properly surfaced a real design problem.
+    </p>
+    <ul class="points">
+      <li>Moved the tests to <code>src/test</code> and made JUnit a test-only dependency.</li>
+      <li>The renderer created its OpenGL objects the moment the class loaded, so any code that touched it, even to clear the draw queue, crashed without a window. I made them initialise on first draw.</li>
+      <li>Separated the timer's end-of-game logic from the screen change behind a small hook, so game rules can be tested without graphics.</li>
+      <li>Rewrote the leaderboard test to cover parsing, ranking and high-score updates, and added a GitHub Actions workflow that builds and runs all 9 tests on every push.</li>
+    </ul>
+    <pre>./gradlew test
+BUILD SUCCESSFUL · 9 tests, 0 failures</pre>
+
+    <h2>What I learned</h2>
+    <div class="lesson"><h3>A green build can be lying.</h3><p>"Tests pass" meant nothing while zero tests were running. Now I check the test count, not just the colour.</p></div>
+    <div class="lesson"><h3>Keep rules apart from rendering.</h3><p>Game logic that reaches straight into the graphics layer is hard to test. A thin seam between them fixed that.</p></div>
+
+    <footer>
+      <a href="../../#projects">&#8249; All projects</a>
+      <span>Jesly Prosper</span>
+    </footer>
+  </main>
+</body>
+</html>

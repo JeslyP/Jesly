@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous Barrel Collection | Jesly Prosper</title>
+  <meta name="description" content="Case study: a ROS2 multi-robot system where TurtleBot3 robots find, collect and deliver barrels, and decontaminate themselves, with no human input. By Jesly Prosper." />
+  <meta name="theme-color" content="#fbfbfd" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d1d1f'/><text x='50' y='69' font-size='54' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='600'>J</text></svg>" />
+  <script>
+    /* Apply the theme before paint, using the same "theme" key as the main portfolio. */
+    (() => {
+      let t = null;
+      try { t = localStorage.getItem("theme"); } catch {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="stylesheet" href="../case-study.css" />
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="../../#projects">&#8249; Back to projects</a>
+
+    <p class="kicker">University of York · Autonomous Robotics · Jan 2026</p>
+    <h1>Robots that clean up after themselves.</h1>
+    <p class="lead">
+      A team of TurtleBot3 robots patrols a simulated arena, spots contaminated barrels with a camera, carries them
+      to a drop-off zone, and goes off to decontaminate when its own radiation dose gets too high. No human in the loop.
+    </p>
+    <ul class="chips">
+      <li>Python</li><li>ROS2</li><li>Nav2</li><li>Gazebo</li><li>TurtleBot3</li><li>Docker</li>
+    </ul>
+    <div class="actions">
+      <a class="link-more" href="https://github.com/JeslyP/AUROJES2025/tree/My_fix-for-assignement/solution" target="_blank" rel="noopener">View the code</a>
+      <a class="link-more" href="https://github.com/JeslyP/AUROJES2025/tree/My_fix-for-assignement" target="_blank" rel="noopener">Full repository</a>
+    </div>
+
+    <ul class="stats">
+      <li><strong>8</strong><span>states in the controller</span></li>
+      <li><strong>5 × 3 h</strong><span>test scenarios run</span></li>
+      <li><strong>90–100%</strong><span>barrel detection accuracy</span></li>
+    </ul>
+
+    <h2>The problem</h2>
+    <p>
+      The arena is scattered with red and blue barrels. Robots have to find them, pick them up with a rear holder,
+      and deliver them to the right zone. Picking up barrels raises a robot's radiation level, and above a threshold it
+      has to drive to a cyan decontamination zone before carrying on. Several robots share the arena, so they must not
+      chase the same barrel or block each other, and everything runs against a clock.
+    </p>
+
+    <h2>How the controller works</h2>
+    <p>
+      Every robot runs its own <code>robot_controller</code> node, namespaced <code>robot1</code>, <code>robot2</code> and so on.
+      A finite state machine decides what the robot is doing at any moment. Small sub-phases inside some states
+      (aligning, turning, reversing) keep each state simple.
+    </p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 760 250" role="img" aria-labelledby="fsm-title">
+        <title id="fsm-title">Controller state machine: Searching, Approaching, Positioning, Picking up, Delivering, Offloading, Clearing space, then either Decontaminating or back to Searching.</title>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="fsm-arrow" d="M0,0 L10,5 L0,10 z" />
+          </marker>
+        </defs>
+        <!-- forward path: top row left to right, then bottom row right to left -->
+        <path class="fsm-edge" d="M170 80 H208" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M360 80 H398" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M550 80 H588" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M665 100 V168" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M590 190 H552" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M400 190 H362" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M210 190 H172" marker-end="url(#arrow)" />
+        <path class="fsm-edge" d="M95 170 V102" marker-end="url(#arrow)" />
+        <!-- back edges -->
+        <path class="fsm-edge back" d="M285 60 C285 30, 95 30, 95 58" marker-end="url(#arrow)" />
+        <path class="fsm-edge back" d="M665 60 C665 6, 125 6, 125 58" marker-end="url(#arrow)" />
+        <path class="fsm-edge back" d="M250 170 L150 102" marker-end="url(#arrow)" />
+        <text class="fsm-label" x="190" y="32" text-anchor="middle">target lost</text>
+        <text class="fsm-label" x="420" y="15" text-anchor="middle">pickup failed</text>
+        <text class="fsm-label" x="214" y="140">dose OK</text>
+        <text class="fsm-label" x="102" y="140">done</text>
+        <text class="fsm-label" x="672" y="140">picked up</text>
+
+        <g class="fsm-node is-start"><rect x="20" y="60" width="150" height="40" rx="10" /><text x="95" y="84" text-anchor="middle">SEARCHING</text></g>
+        <g class="fsm-node"><rect x="210" y="60" width="150" height="40" rx="10" /><text x="285" y="84" text-anchor="middle">APPROACHING</text></g>
+        <g class="fsm-node"><rect x="400" y="60" width="150" height="40" rx="10" /><text x="475" y="84" text-anchor="middle">POSITIONING</text></g>
+        <g class="fsm-node"><rect x="590" y="60" width="150" height="40" rx="10" /><text x="665" y="84" text-anchor="middle">PICKING_UP</text></g>
+        <g class="fsm-node"><rect x="590" y="170" width="150" height="40" rx="10" /><text x="665" y="194" text-anchor="middle">DELIVERING</text></g>
+        <g class="fsm-node"><rect x="400" y="170" width="150" height="40" rx="10" /><text x="475" y="194" text-anchor="middle">OFFLOADING</text></g>
+        <g class="fsm-node"><rect x="210" y="170" width="150" height="40" rx="10" /><text x="285" y="194" text-anchor="middle">CLEARING_SPACE</text></g>
+        <g class="fsm-node"><rect x="20" y="170" width="150" height="40" rx="10" /><text x="95" y="194" text-anchor="middle">DECONTAMINATING</text></g>
+      </svg>
+      <figcaption>The controller's state machine. Dashed arrows are recovery paths back to searching.</figcaption>
+    </figure>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th>What the robot does</th></tr></thead>
+        <tbody>
+          <tr><td><code>SEARCHING</code></td><td>Patrols with Nav2 waypoints until the camera reports a barrel.</td></tr>
+          <tr><td><code>APPROACHING</code></td><td>Chooses the best barrel and steers to it with proportional visual servoing, keeping it centred in the image.</td></tr>
+          <tr><td><code>POSITIONING</code></td><td>Aligns, turns around and backs up so the rear holder lines up with the barrel.</td></tr>
+          <tr><td><code>PICKING_UP</code></td><td>Calls the <code>/pick_up_item</code> service.</td></tr>
+          <tr><td><code>DELIVERING</code></td><td>Navigates with Nav2 to the drop-off zone.</td></tr>
+          <tr><td><code>OFFLOADING</code></td><td>Calls <code>/offload_item</code>.</td></tr>
+          <tr><td><code>CLEARING_SPACE</code></td><td>Moves away from the zone so it doesn't block teammates, then checks its radiation dose.</td></tr>
+          <tr><td><code>DECONTAMINATING</code></td><td>Drives to the cyan zone, reverses in, and calls <code>/decontaminate</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Engineering details</h2>
+    <ul class="cards">
+      <li><h3>LiDAR sectoring</h3><p>The laser scan is split into front, left and right sectors. The closest reading in each drives obstacle avoidance while the robot is under direct velocity control.</p></li>
+      <li><h3>Dynamic LiDAR mask</h3><p>While carrying a barrel, a mask is switched on through a parameter service so the robot doesn't treat its own cargo as an obstacle.</p></li>
+      <li><h3>Multi-robot coordination</h3><p>Robots read shared <code>/barrel_holders</code> and <code>/radiation_levels</code> topics, so they skip barrels a teammate is already handling.</p></li>
+      <li><h3>Data logging</h3><p>A separate <code>data_logger</code> node writes barrels collected and radiation levels to CSV every second, which is how runs were compared.</p></li>
+    </ul>
+
+    <h2>Testing</h2>
+    <p>
+      I ran five 3-hour scenarios with different random seeds and robot counts, logging every run to CSV. Detection
+      accuracy stayed between 90 and 100% across them. The logs also showed where time was being lost, which led me to
+      tune the decontamination threshold so robots didn't run out the clock on long sessions.
+    </p>
+
+    <h2>What I learned</h2>
+    <div class="lesson"><h3>State machines keep autonomy debuggable.</h3><p>When a robot got stuck, the logged state told me exactly which behaviour was at fault, so fixes stayed local.</p></div>
+    <div class="lesson"><h3>Mix planners with direct control.</h3><p>Nav2 is great for crossing the arena, but the last half-metre to a barrel needed direct visual servoing to be reliable.</p></div>
+    <div class="lesson"><h3>Measure before tuning.</h3><p>Long logged runs, not one-off demos, showed which parameters actually mattered.</p></div>
+
+    <footer>
+      <a href="../../#projects">&#8249; All projects</a>
+      <span>Jesly Prosper</span>
+    </footer>
+  </main>
+</body>
+</html>
