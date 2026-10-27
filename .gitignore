@@ -2,3 +2,5 @@
 Thumbs.db
 resumes/source/*.html
 resumes/source/*.pdf
+resumes/source/node_modules/
+resumes/source/package-lock.json

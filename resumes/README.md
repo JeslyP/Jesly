@@ -12,22 +12,36 @@
 | `trainline-data-analyst.pdf` | Trainline, Data Analyst (Partner Solutions) |
 | `visa-software-engineer.pdf` | Visa, Software Engineer (Reading) |
 
+## Writing a new tailored résumé
+
+All résumé content comes from [`FACTS.md`](FACTS.md), the verified fact bank. Read its tailoring rules and its "Never claim" list first.
+
+1. Copy the closest existing script, for example `cp source/resume_jacobs.py source/resume_<company>.py`, and change the output filename inside it.
+2. Rewrite the summary, skill order and bullets for the job ad, using only facts from `FACTS.md`.
+3. Build it (below) and add a row to the table above.
+
+If you do something new, such as a project, job or certificate, add it to `FACTS.md` first.
+
 ## Editing and rebuilding
 
 Each résumé is generated from a Python script in `source/`. Edit the text in the script, then rebuild.
-Building needs Python 3, Node.js, and Playwright with Chromium.
+Building needs Python 3 and Node.js. One-time setup:
 
 ```bash
 cd resumes/source
+npm install
+npx playwright install chromium
+```
 
+Then, from `resumes/source` (this works in Git Bash, PowerShell, macOS and Linux):
+
+```bash
 # General résumé: writes resume-full.html and resume-web.html, then both PDFs
-python3 resume_general.py .
-node topdf.mjs "$PWD"
+python resume_general.py .
+node topdf.mjs .
 cp resume-full.pdf ../../assets/resume.pdf
 
 # A tailored résumé, for example Jacobs
-python3 resume_jacobs.py .
-node topdf_one.mjs "$PWD/resume-jacobs.html" "$PWD/../jacobs-data-analyst.pdf"
+python resume_jacobs.py .
+node topdf_one.mjs resume-jacobs.html ../jacobs-data-analyst.pdf
 ```
-
-The `topdf` scripts import Playwright from `/opt/node22/lib/node_modules/playwright`. Change that path if Playwright lives elsewhere on your machine.

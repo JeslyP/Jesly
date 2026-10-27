@@ -1,0 +1,6 @@
+{
+  "name": "resume-build",
+  "private": true,
+  "type": "module",
+  "devDependencies": { "playwright": "1.47.2" }
+}
