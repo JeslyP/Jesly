@@ -90,6 +90,15 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 </div>
 
 <div class="entry"><h2>Projects</h2>
+<div class="row"><span>Credit Card Fraud Detection, Python and scikit-learn (Personal project)</span><span class="date">October 2026</span></div>
+<p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection")}</p>
+<ul>
+<li>Built a fraud detection model on 284,807 card transactions (0.17% fraud), trained on earlier transactions and tested on the latest 20% to mimic live deployment, comparing class-weighted logistic regression and gradient boosting.</li>
+<li>Caught 85% of fraud (63 of 74) while flagging only 0.5% of genuine transactions (PR-AUC 0.746, ROC-AUC 0.983), with a cost-based alert threshold that cut estimated fraud losses by 51%.</li>
+<li>Tracked performance across time periods and found recall drifting from 95% to 64%, the signal that would trigger retraining in production.</li>
+</ul>
+</div>
+<div class="entry">
 <div class="row"><span>Autonomous Robotics System (University of York)</span><span class="date">January 2026</span></div>
 <p class="sub">{link("github.com/JeslyP/AUROJES2025/tree/My_fix-for-assignement", "github.com/JeslyP/AUROJES2025")}</p>
 <ul>
