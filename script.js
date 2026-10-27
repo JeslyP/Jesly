@@ -115,7 +115,8 @@
     btn.disabled = true;
     try {
       const res = await fetch(action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
-      if (!res.ok) throw new Error("Request failed");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) throw new Error("Request failed");
       form.reset();
       btn.textContent = "Message sent ✓";
       form.classList.add("is-sent");

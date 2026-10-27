@@ -344,11 +344,14 @@
             <a class="link-more" href="assets/resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
           </div>
         </div>
-        <form class="contact__form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <!-- Create a free form at formspree.io and paste your form ID above so messages land in your inbox without exposing your address. Until then, submitting points visitors to LinkedIn. -->
-          <!-- Spam trap: hidden from people, bots fill it in and Formspree silently drops those submissions. -->
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
-          <input type="hidden" name="_subject" value="New message from your portfolio site" />
+        <form class="contact__form reveal" action="https://api.web3forms.com/submit" method="POST">
+          <!-- Messages are delivered by Web3Forms to Jesly's inbox without putting the email address on the page. -->
+          <!-- Web3Forms public access key: it only lets this form send to Jesly's inbox, so it's safe in the page. -->
+          <input type="hidden" name="access_key" value="8ee8ad12-9089-4c78-8b5f-ec802d3ffd87" />
+          <input type="hidden" name="subject" value="New message from your portfolio site" />
+          <input type="hidden" name="from_name" value="Portfolio contact form" />
+          <!-- Spam trap: hidden from people; bots tick it and Web3Forms rejects those submissions. -->
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
           <label>
             <span>Name</span>
             <input type="text" name="name" placeholder="Your name" required autocomplete="name" />
