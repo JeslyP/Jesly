@@ -346,6 +346,9 @@
         </div>
         <form class="contact__form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
           <!-- Create a free form at formspree.io and paste your form ID above so messages land in your inbox without exposing your address. Until then, submitting points visitors to LinkedIn. -->
+          <!-- Spam trap: hidden from people, bots fill it in and Formspree silently drops those submissions. -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
+          <input type="hidden" name="_subject" value="New message from your portfolio site" />
           <label>
             <span>Name</span>
             <input type="text" name="name" placeholder="Your name" required autocomplete="name" />

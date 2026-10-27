@@ -120,7 +120,7 @@
       btn.textContent = "Message sent ✓";
       form.classList.add("is-sent");
     } catch {
-      btn.textContent = "Something went wrong, please email me";
+      btn.textContent = "Something went wrong, please message me on LinkedIn";
       btn.disabled = false;
       setTimeout(() => { btn.textContent = original; }, 3000);
     }
