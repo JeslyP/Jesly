@@ -69,7 +69,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <p class="sub">{link("github.com/JeslyP/NHS-Data-Science-Project-")}</p>
 <ul>
 <li>Structured six raw NHS operational datasets into a normalised relational schema in SQLite, documented with an ER diagram, to answer why patients miss appointments.</li>
-<li>Used a chi-square test to find the significant drivers of no-shows, a logistic regression model to predict them, and K-means clustering to segment patients by behaviour, flagging overfitting rather than reporting an inflated result.</li>
+<li>Tested what drives missed appointments with chi-square tests and a logistic regression model, and reported honestly that no factor predicted cancellation (ROC-AUC 0.50); used K-means clustering to find that 2% of patients account for 15% of appointments.</li>
 </ul>
 </div>
 <div class="entry">

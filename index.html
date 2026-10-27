@@ -138,6 +138,7 @@
               3-hour test scenarios with 90 to 100% detection accuracy.
             </p>
             <p class="tile__tech">Python · ROS2 · Nav2 · Gazebo · Docker</p>
+            <a class="link-more" href="projects/auro/">Read the case study</a>
             <a class="link-more" href="https://github.com/JeslyP/AUROJES2025/tree/My_fix-for-assignement" target="_blank" rel="noopener">View code</a>
           </article>
 
@@ -145,9 +146,9 @@
             <p class="tile__kicker">University of York · May 2025</p>
             <h3 class="tile__title">NHS data science &amp; ETL pipeline.</h3>
             <p class="tile__text">
-              Normalised six raw NHS operational datasets into a relational SQLite schema, then used a chi-square test
-              to find the drivers of appointment no-shows, a logistic regression model to predict them (flagging
-              overfitting rather than reporting an inflated score), and K-means clustering to segment patients.
+              Normalised six raw NHS operational datasets (557k appointments, 400k patients) into a relational SQLite
+              schema. Chi-square tests and a logistic regression model showed that no factor predicted cancellations
+              (ROC-AUC 0.50), and I reported that honestly. K-means clustering found that 2% of patients account for 15% of appointments.
             </p>
             <p class="tile__tech">Python · Pandas · Scikit-learn · SQLite · Statistics</p>
             <a class="link-more" href="https://github.com/JeslyP/NHS-Data-Science-Project-" target="_blank" rel="noopener">View code</a>
@@ -170,9 +171,11 @@
             <h3 class="tile__title">Campus Tycoon simulation game.</h3>
             <p class="tile__text">
               libGDX city-building simulation in Java, using the Factory pattern and class hierarchies for buildings
-              and events. Coordinated a four-person Agile team with Jira and delivered on time with CI/CD integration.
+              and events. Coordinated a four-person Agile team with Jira and delivered on time. Later fixed a test suite
+              that had never actually run and added a GitHub Actions pipeline that builds and tests every push.
             </p>
-            <p class="tile__tech">Java · libGDX · Agile · CI/CD</p>
+            <p class="tile__tech">Java · libGDX · JUnit · GitHub Actions · Agile</p>
+            <a class="link-more" href="projects/campus-tycoon/">Read the case study</a>
             <a class="link-more" href="https://github.com/JeslyP/CampusTycoonBackend2" target="_blank" rel="noopener">View code</a>
           </article>
 

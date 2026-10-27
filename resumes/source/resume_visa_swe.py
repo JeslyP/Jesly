@@ -75,13 +75,14 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <ul>
 <li>Built a libGDX simulation game in Java using the Factory pattern and inheritance and polymorphism across class hierarchies, working in a 4-person Agile team with Jira and CI/CD and delivering on time.</li>
 <li>Reviewed teammates' code through pull requests, checking it against the team's coding standards and design before merging.</li>
+<li>Diagnosed why the project's JUnit tests had never run (wrong source set), fixed an OpenGL initialisation bug they exposed, and added a GitHub Actions pipeline that builds and runs all tests on every push.</li>
 </ul>
 </div>
 <div class="entry">
 <div class="row"><span>NHS Data Science &amp; ETL Pipeline, Python and SQL (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/NHS-Data-Science-Project-")}</p>
 <ul>
-<li>Designed a relational schema from six raw NHS datasets and built an ETL pipeline into SQLite, then modelled appointment no-shows with logistic regression and clustering.</li>
+<li>Normalised six raw NHS datasets (557k appointments) into a SQLite schema, then used logistic regression and K-means clustering, finding that 2% of patients make 15% of appointments while demographics did not predict cancellations.</li>
 </ul>
 </div>
 

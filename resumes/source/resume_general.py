@@ -104,8 +104,8 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 <div class="row"><span>NHS Data Science &amp; ETL Pipeline (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/NHS-Data-Science-Project-")}</p>
 <ul>
-<li>Designed a relational database schema from six raw NHS operational datasets (appointments, billing, insurance, prescriptions, surgery, test records), building an ER diagram and normalising the data into SQLite.</li>
-<li>Ran a chi-square test to identify significant drivers of appointment no-shows, built a logistic regression model to predict no-show likelihood (correctly identifying and flagging overfitting rather than reporting an inflated result), and applied K-means clustering to segment patients by behaviour.</li>
+<li>Designed a normalised (3NF) SQLite database with an ER diagram from six raw NHS operational datasets (appointments, billing, insurance, prescriptions, surgery, test records), covering 557k appointments and 400k patients.</li>
+<li>Tested what drives missed appointments with chi-square tests and a logistic regression model, and reported honestly that no factor predicted cancellation (ROC-AUC 0.50); used K-means clustering to find that 2% of patients account for 15% of appointments.</li>
 </ul>
 </div>
 <div class="entry">
@@ -120,6 +120,7 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 <p class="sub">{link("github.com/JeslyP/CampusTycoonBackend2")}</p>
 <ul>
 <li>Built a libGDX-based city simulation game in Java, using the Factory pattern to instantiate building types and inheritance/polymorphism across building and event class hierarchies, coordinating a 4-person Agile team with Jira and delivering on time with CI/CD integration.</li>
+<li>Diagnosed why the project's JUnit tests had never run (wrong source set), fixed an OpenGL initialisation bug they exposed, and added a GitHub Actions pipeline that builds and runs all tests on every push.</li>
 </ul>
 </div>
 </body></html>"""

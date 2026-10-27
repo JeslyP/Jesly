@@ -81,6 +81,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <ul>
 <li>Built a libGDX city simulation game in Java, using the Factory pattern for building types and inheritance and polymorphism across building and event class hierarchies.</li>
 <li>Coordinated a 4-person Agile team with Jira and delivered on time with CI/CD integration.</li>
+<li>Diagnosed why the project's JUnit tests had never run (wrong source set), fixed an OpenGL initialisation bug they exposed, and added a GitHub Actions pipeline that builds and runs all tests on every push.</li>
 </ul>
 </div>
 <div class="entry">
@@ -94,7 +95,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 <div class="row"><span>NHS Data Science &amp; ETL Pipeline, Python and SQL (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/NHS-Data-Science-Project-")}</p>
 <ul>
-<li>Normalised six raw NHS datasets into a relational SQLite schema, then built a logistic regression model to predict appointment no-shows and K-means clustering to segment patients.</li>
+<li>Normalised six raw NHS datasets (557k appointments) into a SQLite schema, then used logistic regression and K-means clustering, finding that 2% of patients make 15% of appointments while demographics did not predict cancellations.</li>
 </ul>
 </div>
 

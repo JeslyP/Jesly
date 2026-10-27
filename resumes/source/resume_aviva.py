@@ -73,7 +73,7 @@ h2 {{ margin: 6.5pt 0 2.5pt; }}
 <p class="sub">{link("github.com/JeslyP/NHS-Data-Science-Project-")}</p>
 <ul>
 <li>Cleansed and integrated six raw NHS operational datasets, including billing and insurance records, into a normalised relational database in SQLite.</li>
-<li>Ran a chi-square test to find the drivers of appointment no-shows and built a logistic regression model to predict them, flagging overfitting rather than reporting an inflated result.</li>
+<li>Tested the drivers of appointment cancellations with chi-square tests and logistic regression, and reported honestly that no factor was predictive (ROC-AUC 0.50) rather than overstating a weak model.</li>
 </ul>
 </div>
 </body></html>"""

@@ -80,7 +80,7 @@ html = f"""<!doctype html><html><head><meta charset="utf-8"><title>Jesly Prosper
 <div class="row"><span>NHS Data Science &amp; ETL Pipeline, Python and SQL (University of York)</span><span class="date">May 2025</span></div>
 <p class="sub">{link("github.com/JeslyP/NHS-Data-Science-Project-")}</p>
 <ul>
-<li>Normalised six raw NHS datasets into a relational schema, then used logistic regression and K-means clustering to predict and segment appointment no-shows.</li>
+<li>Normalised six raw NHS datasets (557k appointments) into a SQLite schema, then used logistic regression and K-means clustering, finding that 2% of patients make 15% of appointments while demographics did not predict cancellations.</li>
 </ul>
 </div>
 <div class="entry">
