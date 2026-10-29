@@ -40,6 +40,7 @@ Then, from `resumes/source` (this works in Git Bash, PowerShell, macOS and Linux
 python resume_general.py .
 node topdf.mjs .
 cp resume-full.pdf ../../assets/resume.pdf
+# resume-apply.pdf adds phone numbers: send it with applications, but don't publish it on the site
 
 # A tailored résumé, for example Jacobs
 python resume_jacobs.py .

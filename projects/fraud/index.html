@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Card Fraud Detection | Jesly Prosper</title>
+  <meta name="description" content="Case study: a fraud detection model on 284,807 card transactions, tested on a later time period, judged on precision, recall and money saved. By Jesly Prosper." />
+  <meta name="theme-color" content="#fbfbfd" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d1d1f'/><text x='50' y='69' font-size='54' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='600'>J</text></svg>" />
+  <script>
+    /* Apply the theme before paint, using the same "theme" key as the main portfolio. */
+    (() => {
+      let t = null;
+      try { t = localStorage.getItem("theme"); } catch {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="stylesheet" href="../case-study.css" />
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="../../#projects">&#8249; Back to projects</a>
+
+    <p class="kicker">Personal project · October 2026</p>
+    <h1>Catching fraud without crying wolf.</h1>
+    <p class="lead">
+      Fraud is rare and expensive, so a model that calls everything genuine looks 99.9% accurate and catches nothing.
+      I built a fraud model and judged it the way a fraud team would: on transactions it had never seen,
+      by how much fraud it caught, how many false alarms it raised, and how much money it saved.
+    </p>
+    <ul class="chips">
+      <li>Python</li><li>Scikit-learn</li><li>FastAPI</li><li>AWS Lambda</li><li>SQS</li><li>SNS</li><li>Terraform</li><li>GitHub Actions</li><li>Docker</li><li>pytest</li>
+    </ul>
+    <div class="actions">
+      <a class="link-more" href="https://github.com/JeslyP/credit-card-fraud-detection" target="_blank" rel="noopener">View the code</a>
+      <a class="link-more" href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health" target="_blank" rel="noopener">Live API health check</a>
+    </div>
+
+    <ul class="stats">
+      <li><strong>85%</strong><span>of fraud caught (63 of 74)</span></li>
+      <li><strong>0.5%</strong><span>of genuine transactions flagged</span></li>
+      <li><strong>51%</strong><span>cut in estimated fraud losses</span></li>
+    </ul>
+
+    <h2>The data</h2>
+    <p>
+      The public Kaggle credit card fraud dataset: 284,807 card transactions made by European cardholders over two days,
+      of which only 492 (0.17%) are fraud. Features <code>V1</code> to <code>V28</code> are anonymised PCA components,
+      alongside the transaction <code>Time</code> and <code>Amount</code>. I removed 1,081 duplicate rows and added two
+      features: hour of day, because fraud is relatively more common overnight, and log-transformed amount.
+    </p>
+
+    <h2>Testing it like it's live</h2>
+    <p>
+      A random train/test split would let the model learn from transactions that happen after the ones it is tested on.
+      A real fraud system never gets that advantage, so I split by time instead:
+    </p>
+    <ul class="points">
+      <li><strong>Train:</strong> the earliest 60% of transactions (170,235, with 342 frauds).</li>
+      <li><strong>Validate:</strong> the next 20% (56,745), used only to compare models and pick the alert threshold.</li>
+      <li><strong>Test:</strong> the latest 20% (56,746, with 74 frauds), touched once at the very end.</li>
+    </ul>
+
+    <h2>Comparing models</h2>
+    <p>
+      I compared a do-nothing baseline with two models, each weighted so the rare fraud cases count as much as the
+      genuine ones. Results on the validation period, at a default 0.5 threshold:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>Recall</th><th>Precision</th><th>PR-AUC</th></tr></thead>
+        <tbody>
+          <tr><td>Baseline (always "genuine")</td><td>99.9%</td><td>0%</td><td>0%</td><td>0.001</td></tr>
+          <tr><td>Logistic regression (class-weighted)</td><td>95.9%</td><td>89%</td><td>2%</td><td><strong>0.760</strong></td></tr>
+          <tr><td>Gradient boosting (class-weighted)</td><td>99.7%</td><td>81%</td><td>23%</td><td>0.743</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The baseline wins on accuracy while catching no fraud at all, which is exactly why accuracy is the wrong metric here.
+      I used <strong>PR-AUC</strong> (average precision), which focuses on the rare class, to choose the model, and
+      logistic regression came out narrowly ahead.
+    </p>
+
+    <h2>Setting the threshold by cost</h2>
+    <p>
+      A model only outputs a score; someone has to decide where to draw the line. A missed fraud costs roughly the
+      transaction amount, while a false alarm costs an analyst review. Assuming <strong>€5 per review</strong>, I tested
+      thresholds from 0.01 to 0.99 on the validation period and chose the one with the lowest total cost: <strong>0.91</strong>.
+    </p>
+
+    <h2>Results on the unseen test period</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Fraud caught (recall)</td><td>63 of 74 (85%)</td></tr>
+          <tr><td>False alarms</td><td>278 of 56,672 genuine transactions (0.5%)</td></tr>
+          <tr><td>Precision</td><td>18.5% of alerts were real fraud</td></tr>
+          <tr><td>PR-AUC / ROC-AUC</td><td>0.746 / 0.983</td></tr>
+          <tr><td>Estimated fraud losses</td><td>€7,728 with no model, €3,757 with it: a 51% saving</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      About one alert in five being real fraud sounds low, but with fraud this rare it is a reasonable trade: each review
+      costs far less than the fraud it can stop, and the threshold was chosen to balance exactly that.
+    </p>
+
+    <h2>Watching for drift</h2>
+    <p>
+      Fraud patterns change, so a deployed model has to be monitored. Splitting the test period into four equal chunks
+      showed recall falling over time:
+    </p>
+    <div class="figure">
+      <ul class="bars">
+        <li><span>Period 1</span><span class="track"><span class="fill" style="width:95%"></span></span><span class="val">95%</span></li>
+        <li><span>Period 2</span><span class="track"><span class="fill" style="width:83%"></span></span><span class="val">83%</span></li>
+        <li><span>Period 3</span><span class="track"><span class="fill" style="width:91%"></span></span><span class="val">91%</span></li>
+        <li class="is-low"><span>Period 4</span><span class="track"><span class="fill" style="width:64%"></span></span><span class="val">64%</span></li>
+      </ul>
+      <figcaption>Recall (share of fraud caught) in each quarter of the test period. Periods 3 and 4 had only 11 frauds each, so the numbers are noisy, but the drop is the kind of signal that would trigger investigation and retraining.</figcaption>
+    </div>
+
+    <h2>Adding behavioural features</h2>
+    <p>
+      The card dataset's features are anonymised, so it can't show the behavioural signals real fraud systems depend on.
+      I repeated the experiment on <strong>PaySim</strong>, a simulated mobile-money dataset of 6.3 million transactions with
+      real account IDs, and built features from each account's <strong>past</strong> activity only: how many payments a
+      payee had already received, payments in the last 24 hours, hours since the last one, whether the payee was brand new,
+      the amount compared with the payee's usual, and the hour of day.
+    </p>
+    <p>
+      PaySim's documentation warns that fraudulent transactions are cancelled, so its balance columns give the answer away.
+      I kept them out of the real models and trained one comparison model with them, to show how badly a leak inflates the score.
+      All models were trained on hours 1 to 281 and tested on hours 354 to 743 (554,082 transactions, 4,260 frauds).
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Features</th><th>PR-AUC</th><th>Fraud caught when reviewing the top 1% of transactions</th></tr></thead>
+        <tbody>
+          <tr><td>Amount and type only</td><td>0.138</td><td>17.7%</td></tr>
+          <tr><td><strong>+ behavioural features</strong></td><td><strong>0.409</strong></td><td><strong>51.2%</strong></td></tr>
+          <tr><td>Leaky balance columns (comparison only)</td><td>0.9995</td><td>99.95%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Behavioural features <strong>tripled PR-AUC</strong> and nearly tripled the fraud caught within the same review budget.
+      The most useful were hour of day, the amount compared with the payee's usual, how many payments the payee had received
+      before, and whether the payee was new. The near-perfect leaky model is a reminder that a too-good score usually means
+      the model can see something it shouldn't.
+    </p>
+
+    <h2>Running it as a service</h2>
+    <p>Fraud models aren't built once and handed over, so I packaged the card model as a small production service:</p>
+    <ul class="points">
+      <li><strong>Training script</strong> that applies the same time-based split and cost-based threshold, and saves the model with a profile of the training data.</li>
+      <li><strong>FastAPI scoring service</strong> with <code>/score</code> and <code>/health</code> endpoints, input validation, and a log of every prediction.</li>
+      <li><strong>Drift monitor</strong> that compares new data with training data using the Population Stability Index for each feature and for the scores, and checks recall when labels arrive.</li>
+      <li><strong>13 automated tests</strong> run by GitHub Actions on every push, plus a Dockerfile.</li>
+    </ul>
+    <p>
+      It runs on AWS, defined entirely in Terraform and deployed by a one-click GitHub Actions workflow that downloads the
+      data, retrains the model, runs the tests, builds an arm64 container, pushes it to ECR and smoke-tests the live API.
+      Both Lambdas share one container image: one serves the HTTPS API through API Gateway, the other consumes an
+      <strong>SQS queue</strong>, publishes fraud alerts to <strong>SNS</strong>, retries only the messages that fail and
+      sends repeat failures to a dead-letter queue. CloudWatch alarms watch errors, p95 latency and the dead-letter queue,
+      and every role has only the permissions it needs. The deployed model reproduced the notebook exactly
+      (85% recall, PR-AUC 0.746).
+    </p>
+    <p>
+      The first drift check raised a false alarm on hour of day, because any recent window covers different hours from the
+      training period. I excluded that feature from the drift check and documented why, so the monitor only alerts on real change.
+    </p>
+
+    <h2>What I learned</h2>
+    <div class="lesson"><h3>Pick the metric before the model.</h3><p>On imbalanced data, accuracy rewards doing nothing. Precision, recall and PR-AUC show what actually matters.</p></div>
+    <div class="lesson"><h3>Test the way it will be used.</h3><p>A time-based split stops the model peeking at the future, so its score is the one most likely to hold up in production.</p></div>
+    <div class="lesson"><h3>A threshold is a business decision.</h3><p>Turning a score into an alert means weighing missed fraud against review costs, so I tied the threshold to money rather than a default 0.5.</p></div>
+    <div class="lesson"><h3>Behaviour beats raw fields, and leaks beat everything.</h3><p>Account history tripled performance on PaySim, but the biggest jump came from columns that leak the label. Reading the data documentation first is what caught it.</p></div>
+
+    <h2>Next steps</h2>
+    <ul class="points">
+      <li>Add rolling amount features per payer and graph features linking payers and payees, to spot possible mule accounts.</li>
+      <li>Tune the gradient-boosted models and calibrate their probabilities.</li>
+      <li>Serve the PaySim model through the API, which needs a store of each account's recent history at scoring time.</li>
+    </ul>
+
+    <footer>
+      <a href="../../#projects">&#8249; All projects</a>
+      <span>Jesly Prosper</span>
+    </footer>
+  </main>
+</body>
+</html>

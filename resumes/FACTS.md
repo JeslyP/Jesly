@@ -1,7 +1,7 @@
 # Résumé fact bank
 
 Every tailored résumé is written **only** from the facts below. If a claim is not here, it does not go on a résumé until it has been checked and added.
-Last verified: 27 October 2026.
+Last verified: 27 October 2026 (D&K dates confirmed as June 2023 to present; fraud project results added from the executed notebook).
 
 ## Rules for tailoring
 
@@ -22,11 +22,13 @@ Last verified: 27 October 2026.
 | "Flagged overfitting" on the NHS model | Not what happened; that note came from a broken earlier version |
 | The data had a "no-show" status | It only has Completed / Cancelled / Scheduled; cancellation was the proxy |
 | CIFAR-10 model reached 81% | 79% (79.3%). 81% is not reproducible from the saved model |
+| Fraud model "prevents" or "stopped" real fraud | Estimated saving on a public dataset with an assumed €5 review cost |
 | "Production-grade" / "end-to-end ML pipeline" for coursework | University coursework project |
 
 ## Contact and status
 
 - London, UK. British citizen with an unrestricted right to work in the UK.
+- Phone (applications only, not on the public site résumé): +44 7713 676038 · +1 649 245 7928
 - jeslyprosper@gmail.com · linkedin.com/in/jeslyprosper · github.com/JeslyP · Portfolio: jeslyp.github.io/Jesly
 - Languages: English and Haitian Creole (fluent)
 
@@ -37,7 +39,7 @@ Last verified: 27 October 2026.
 
 ## Work experience
 
-### Software Developer, D&K Car Rentals LTD: June 2023 to September 2025
+### Software Developer, D&K Car Rentals LTD: June 2023 to present
 Grand Turk, Turks and Caicos Islands · github.com/JeslyP/dk-car-rentals
 - Designed, built and solely maintained a full-stack booking, fleet and financial-reporting system (Python/Flask + SQL Server, later migrated to Next.js/Supabase) for a live commercial business.
 - Analysed booking, revenue and cost data to find trends and inefficiencies; the recommendations informed pricing and fleet decisions.
@@ -50,6 +52,34 @@ Grand Turk / remote
 - Implemented data validation and error handling for client deliverables.
 
 ## Projects
+
+### Credit Card Fraud Detection, personal project (October 2026)
+github.com/JeslyP/credit-card-fraud-detection · case study: jeslyp.github.io/Jesly/projects/fraud/. Tools: Python, Pandas, NumPy, Scikit-learn, Matplotlib, Jupyter (run on Kaggle)
+- Kaggle dataset (mlg-ulb): 284,807 card transactions, 492 fraud (0.17%); removed 1,081 duplicates; engineered hour of day and log amount.
+- **Time-based split**: earliest 60% train, next 20% validation, latest 20% test (56,746 transactions, 74 frauds).
+- Compared a baseline, class-weighted logistic regression and class-weighted gradient boosting; logistic regression had the best validation PR-AUC (0.760 vs 0.743).
+- Alert threshold chosen by cost (missed fraud amount + €5 per review): 0.91.
+- **Test results:** caught **63 of 74 frauds (85% recall)**, **278 false alarms of 56,672 genuine (0.5%)**, precision 18.5%, **PR-AUC 0.746**, ROC-AUC 0.983; estimated losses **€7,728 to €3,757 (51% saving)**.
+- Monitoring: recall across four test sub-periods 95%, 83%, 91%, 64%, a drift signal that would trigger retraining.
+
+### Fraud: behavioural features on PaySim and a production scoring service (October 2026)
+Same repo (credit-card-fraud-detection). Tools: Python, Pandas, Scikit-learn (HistGradientBoosting), FastAPI, Pydantic, pytest, GitHub Actions, Docker
+- PaySim (ealaxi/paysim1), 6.36M simulated mobile-money transactions; modelled TRANSFER and CASH_OUT only (2,770,409 rows).
+- Behavioural features from **past transactions only**: payee prior count, payee count in last 24h, hours since payee's last payment, new-payee flag, payee prior mean amount, amount vs payee mean, payer prior count, hour of day.
+- Excluded the four balance columns because the dataset documentation says fraud is cancelled, so they leak the label; showed a leaky comparison model separately.
+- Time split: train hours 1 to 281, validation 281 to 354, test 354 to 743 (554,082 rows, 4,260 frauds).
+- **Results on test:** amount and type only PR-AUC **0.138**, 17.7% of fraud caught at a 1% alert budget; **with behavioural features PR-AUC 0.409, 51.2% caught**; leaky comparison 0.9995.
+- Top behavioural features (permutation importance): hour of day, amount vs payee mean, payee prior count, new payee.
+- Production service for the card model: training script saving model, threshold and training-data profile; FastAPI `/score` and `/health` with validation and prediction logging; drift monitor using PSI per feature and on scores plus recall checks; **13 pytest tests in GitHub Actions**; Dockerfile. Hour of day excluded from drift checks after it raised a false alarm.
+- **Deployed to AWS (29 Oct 2026)**, region eu-west-2, via a one-click GitHub Actions workflow: Kaggle download, retrain, 17 tests, arm64 image to ECR, Terraform apply (state in encrypted versioned S3), smoke test. Live API: https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health
+- AWS stack (Terraform): Lambda (API) behind API Gateway HTTP API with throttling; Lambda consumer on SQS (batch 10, ReportBatchItemFailures, DLQ after 3 tries); SNS fraud-alerts topic; CloudWatch logs (14 days) and alarms on errors, p95 latency > 2s and DLQ depth; least-privilege IAM; ECR keeps 5 images.
+- Deployed model reproduced the notebook: recall 85.1%, PR-AUC 0.746. Live test: a known fraud scored 0.99998 (alert); invalid input rejected with 422.
+- Tests now 17 (API, Lambda, SQS consumer, drift, training).
+- Never claim: deployed to real customers or real traffic; PaySim is simulated data.
+
+### Marketplace App, Microsoft Power Apps (personal project)
+- Built a low-code marketplace app in Power Apps, using Power Automate flows (learned through Microsoft's free Power Automate modules).
+
 
 ### NHS Data Science Project, University of York (May 2025)
 github.com/JeslyP/NHS-Data-Science-Project-. Tools: Python, Pandas, SQL, SQLite, SciPy, Scikit-learn, Matplotlib
@@ -90,4 +120,4 @@ github.com/JeslyP/CampusTycoonBackend2. Tools: Java, libGDX, JUnit, GitHub Actio
 
 ## Skills (list only what's true; match the order to the job ad)
 
-Python (Flask, Pandas, NumPy, Scikit-learn, PyTorch), Java, JavaScript/TypeScript (React, Next.js), SQL (T-SQL, PostgreSQL, SQL Server, SQLite), Supabase · Logistic regression, K-means, CNNs, statistical testing · AWS (Lambda, S3, EC2), Docker, Snowflake (skill only, not used on the NHS project), Git, CI/CD, REST APIs, automated testing, Agile/Jira · Tableau, advanced Excel · Financial reporting, KPI tracking, requirements gathering, process mapping
+Python (Flask, Pandas, NumPy, Scikit-learn, PyTorch), Java, JavaScript/TypeScript (React, Next.js), SQL (T-SQL, PostgreSQL, SQL Server, SQLite), Supabase · Logistic regression, K-means, CNNs, statistical testing · AWS (Lambda, S3, EC2), Docker, Snowflake (skill only, not used on the NHS project), Git, CI/CD, REST APIs, automated testing, Agile/Jira · Tableau, Power BI, advanced Excel, PowerPoint, Power Apps, Power Automate · Financial reporting, KPI tracking, requirements gathering, process mapping

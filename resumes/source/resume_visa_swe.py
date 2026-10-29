@@ -6,7 +6,7 @@ css = open(f"{S}/resume_css.txt").read().replace("{{","{").replace("}}","}").rep
 def link(url, text=None):
     return f'<a href="https://{url}">{text or url}</a>'
 
-contact = ['<a href="mailto:jeslyprosper@gmail.com">jeslyprosper@gmail.com</a>',
+contact = ['+44 7713 676038', '+1 649 245 7928', '<a href="mailto:jeslyprosper@gmail.com">jeslyprosper@gmail.com</a>',
            link("linkedin.com/in/jeslyprosper"), link("github.com/JeslyP"),
            link("jeslyp.github.io/Jesly", "Portfolio: jeslyp.github.io/Jesly"),
            "London, UK", "British citizen (unrestricted right to work in the UK)"]
@@ -41,7 +41,7 @@ h2 {{ margin: 5.5pt 0 2.5pt; }}
 
 <h2>Experience</h2>
 <div class="entry">
-<div class="row"><span>Software Developer, D&amp;K Car Rentals LTD</span><span class="date">June 2023 to September 2025</span></div>
+<div class="row"><span>Software Developer, D&amp;K Car Rentals LTD</span><span class="date">June 2023 to Present</span></div>
 <p class="sub">Grand Turk, Turks and Caicos Islands | {link("github.com/JeslyP/dk-car-rentals")}</p>
 <ul>
 <li>Designed, built, and solely maintained a full-stack booking, fleet, and financial reporting platform for a live business, including a REST back end of 20 API endpoints covering bookings, rentals, invoicing, payments, and reporting.</li>

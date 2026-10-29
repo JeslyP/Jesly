@@ -5,10 +5,12 @@ fonts = open(f"{S}/fonts/lato-embedded.css").read()
 def link(url, text=None):
     return f'<a href="https://{url}">{text or url}</a>'
 
-def build(with_email):
+def build(with_email, with_phone=False):
     contact = []
     if with_email:
         contact.append('<a href="mailto:jeslyprosper@gmail.com">jeslyprosper@gmail.com</a>')
+    if with_phone:
+        contact = ["+44 7713 676038", "+1 649 245 7928"] + contact
     contact += [link("linkedin.com/in/jeslyprosper"), link("github.com/JeslyP"),
                 link("jeslyp.github.io/Jesly", "Portfolio: jeslyp.github.io/Jesly"),
                 "London, UK", "British citizen (unrestricted right to work in the UK)"]
@@ -43,10 +45,10 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 <h2>Technical Skills</h2>
 <div class="skills">
 <p><b>Programming &amp; Data:</b> Python (Flask, Pandas, NumPy, Scikit-learn, PyTorch), Java, JavaScript/TypeScript (React, Next.js), SQL (T-SQL, PostgreSQL, MS SQL Server), Supabase</p>
-<p><b>Machine Learning &amp; Analytics:</b> Predictive modelling (Logistic Regression), clustering (K-Means), deep learning (CNNs, PyTorch), statistical analysis, ETL pipeline design</p>
+<p><b>Machine Learning &amp; Analytics:</b> Fraud detection, imbalanced classification (precision, recall, PR-AUC), predictive modelling (Logistic Regression, Gradient Boosting), clustering (K-Means), deep learning (CNNs, PyTorch), statistical analysis, ETL pipeline design</p>
 <p><b>Business &amp; Financial Analysis:</b> Financial reporting, revenue and cost analysis, KPI tracking, forecasting support, requirements gathering, business process mapping</p>
-<p><b>Cloud &amp; Engineering Practice:</b> AWS (Lambda, S3, EC2), Docker, Snowflake, Git, CI/CD pipelines, REST API design, automated testing, Agile delivery (Jira)</p>
-<p><b>Reporting &amp; AI Tools:</b> Tableau, advanced Excel (pivot tables, complex formulas), everyday use of AI tools (Claude, GitHub Copilot) for development and analysis</p>
+<p><b>Cloud &amp; Engineering Practice:</b> AWS (Lambda, API Gateway, SQS, SNS, CloudWatch, ECR, S3, EC2), Terraform, Docker, Snowflake, Git, CI/CD pipelines, REST API design, automated testing, Agile delivery (Jira)</p>
+<p><b>Reporting &amp; AI Tools:</b> Tableau, Power BI, advanced Excel (pivot tables, complex formulas), PowerPoint, Power Apps and Power Automate, everyday use of AI tools (Claude, GitHub Copilot) for development and analysis</p>
 <p><b>Languages:</b> Fluent in English and Haitian Creole</p>
 </div>
 
@@ -62,7 +64,7 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 
 <h2>Work Experience</h2>
 <div class="entry">
-<div class="row"><span>Software Developer, D&amp;K Car Rentals LTD</span><span class="date">June 2023 to September 2025</span></div>
+<div class="row"><span>Software Developer, D&amp;K Car Rentals LTD</span><span class="date">June 2023 to Present</span></div>
 <p class="sub">Grand Turk, Turks and Caicos Islands | {link("github.com/JeslyP/dk-car-rentals")}</p>
 <ul>
 <li>Designed, built, and solely maintained a full-stack booking, fleet, and financial reporting system (Python/Flask + SQL Server, later migrated to Next.js/Supabase) for a live commercial business.</li>
@@ -90,12 +92,13 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 </div>
 
 <div class="entry"><h2>Projects</h2>
-<div class="row"><span>Credit Card Fraud Detection, Python and scikit-learn (Personal project)</span><span class="date">October 2026</span></div>
-<p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection")}</p>
+<div class="row"><span>Fraud Detection: Models, Behavioural Features and Scoring Service (Personal Project)</span><span class="date">October 2026</span></div>
+<p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection")} | {link("jeslyp.github.io/Jesly/projects/fraud/", "Case study")} | <a href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health">Live API</a></p>
 <ul>
-<li>Built a fraud detection model on 284,807 card transactions (0.17% fraud), trained on earlier transactions and tested on the latest 20% to mimic live deployment, comparing class-weighted logistic regression and gradient boosting.</li>
-<li>Caught 85% of fraud (63 of 74) while flagging only 0.5% of genuine transactions (PR-AUC 0.746, ROC-AUC 0.983), with a cost-based alert threshold that cut estimated fraud losses by 51%.</li>
-<li>Tracked performance across time periods and found recall drifting from 95% to 64%, the signal that would trigger retraining in production.</li>
+<li>Built class-weighted logistic regression and gradient boosting models in scikit-learn on 284,807 card transactions (0.17% fraud), using a time-based split so the model was tested only on later transactions it had never seen.</li>
+<li>Caught 85% of fraud (63 of 74) while flagging just 0.5% of genuine transactions (PR-AUC 0.746); set the alert threshold by the cost of missed fraud versus manual review, cutting estimated fraud losses by 51%, and tracked recall over time to detect drift.</li>
+<li>On 6.3M PaySim payments, built behavioural features from each account's past activity (payee history, 24-hour velocity, new payees), which tripled PR-AUC from 0.14 to 0.41; excluded balance columns that leak the label.</li>
+<li>Deployed it live on AWS with Terraform from a one-click GitHub Actions pipeline: a FastAPI scoring API on Lambda and API Gateway, an event-driven SQS consumer publishing fraud alerts to SNS with a dead-letter queue, CloudWatch alarms and 17 automated tests.</li>
 </ul>
 </div>
 <div class="entry">
@@ -136,4 +139,5 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 
 open(f"{S}/resume-full.html","w").write(build(True))
 open(f"{S}/resume-web.html","w").write(build(False))
+open(f"{S}/resume-apply.html","w").write(build(True, True))
 print("html written")
