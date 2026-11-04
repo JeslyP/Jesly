@@ -24,6 +24,9 @@ Last verified: 27 October 2026 (D&K dates confirmed as June 2023 to present; fra
 | CIFAR-10 model reached 81% | 79% (79.3%). 81% is not reproducible from the saved model |
 | Fraud model "prevents" or "stopped" real fraud | Estimated saving on a public dataset with an assumed €5 review cost |
 | "Production-grade" / "end-to-end ML pipeline" for coursework | University coursework project |
+| Fraud agent "catches 70% of fraud" or "escalates 50% of genuine" | Those rates come from the stratified evaluation sample (equal groups, one group was the model's false alarms by design), not real-world performance |
+| Fraud agent used in production / by a real fraud team | Personal project; evaluated on 46 labelled cases from a public dataset; demo cases only on AWS |
+| Agent "improves fraud detection" | It follows the model and policy; it explains and triages, it cannot catch fraud the model scores low |
 
 ## Contact and status
 
@@ -74,8 +77,19 @@ Same repo (credit-card-fraud-detection). Tools: Python, Pandas, Scikit-learn (Hi
 - **Deployed to AWS (29 Oct 2026)**, region eu-west-2, via a one-click GitHub Actions workflow: Kaggle download, retrain, 17 tests, arm64 image to ECR, Terraform apply (state in encrypted versioned S3), smoke test. Live API: https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health
 - AWS stack (Terraform): Lambda (API) behind API Gateway HTTP API with throttling; Lambda consumer on SQS (batch 10, ReportBatchItemFailures, DLQ after 3 tries); SNS fraud-alerts topic; CloudWatch logs (14 days) and alarms on errors, p95 latency > 2s and DLQ depth; least-privilege IAM; ECR keeps 5 images.
 - Deployed model reproduced the notebook: recall 85.1%, PR-AUC 0.746. Live test: a known fraud scored 0.99998 (alert); invalid input rejected with 422.
-- Tests now 17 (API, Lambda, SQS consumer, drift, training).
+- Tests were 17 at deployment (API, Lambda, SQS consumer, drift, training); 34 after the agent was added.
 - Never claim: deployed to real customers or real traffic; PaySim is simulated data.
+
+### LLM Fraud Analyst Agent, Claude with tool use, personal project (November 2026)
+Code: github.com/JeslyP/credit-card-fraud-detection/tree/main/fraudagent · Tools: Python, Claude API (claude-haiku-5-5), tool use, structured output, pytest, GitHub Actions, Workload Identity Federation
+- Claude investigates a flagged transaction with 5 tools: get_transaction, score_transaction, explain_score (exact logistic-regression contributions), find_similar_cases (25 nearest training transactions), get_review_policy; answers through a structured submit_recommendation tool (escalate / monitor / clear, summary, evidence, injection flag).
+- Guardrail in code re-applies the written policy; if the agent is less cautious, the policy wins and the case is flagged. Fails safe to policy if the agent cannot finish in 8 turns. A human always makes the final decision.
+- Customer/merchant notes are marked untrusted; evaluation includes prompt-injection attacks.
+- **Evaluation (3 Nov 2026), 46 labelled cases from the unseen test period:** 100% valid structured output (46/46); 100% of model probabilities quoted correctly; 98% agreement with policy before the guardrail (45/46); 1 guardrail override; 6 of 6 prompt injections resisted and reported, 0 false injection reports; 6.0 tool calls, 4.7 s average (6.0 s p95), about 4,490 input / 918 output tokens per case. Sample: 10 caught fraud, 10 missed fraud, 10 false alarms, 10 clean genuine, 6 injection.
+- The one override (EVAL-014) was a real fraud scored 0.4574: the policy tool showed the monitor cut-off rounded to 0.46, so the agent recommended clear; true cut-off 0.455, so the guardrail changed it to monitor. Fixed the tool to show exact cut-offs and added a regression test.
+- Keyless CI: the evaluation and deploy workflows log in to Claude with Workload Identity Federation (GitHub OIDC token exchanged for a short-lived Anthropic token; rule pinned to the repo and main branch by immutable IDs, workflow_dispatch only, Developer role, one workspace). No Claude API key stored.
+- Demo page (GET /demo) on the AWS API shows agent reviews of demo cases recorded during deployment. Only live once the Deploy to AWS workflow has been run after 3 Nov 2026.
+- Repo tests: 34 (pytest), agent tests run offline with a scripted fake Claude client.
 
 ### Marketplace App, Microsoft Power Apps (personal project)
 - Built a low-code marketplace app in Power Apps, using Power Automate flows (learned through Microsoft's free Power Automate modules).

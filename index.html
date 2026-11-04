@@ -129,8 +129,8 @@
           </article>
 
           <article class="tile tile--wide reveal">
-            <p class="tile__kicker">Personal project · Oct 2026</p>
-            <h3 class="tile__title">Credit card fraud detection.</h3>
+            <p class="tile__kicker">Personal project · Oct to Nov 2026</p>
+            <h3 class="tile__title">Credit card fraud detection, with a Claude agent.</h3>
             <p class="tile__text">
               A model that flags fraudulent card transactions while keeping false alarms low, tested the way a fraud team would:
               trained on earlier transactions and evaluated on the latest 20% it had never seen. Out of 284,807 transactions,
@@ -145,10 +145,17 @@
             <p class="tile__text">
               On 6.3 million PaySim payments, behavioural features built from each account's past activity tripled PR-AUC
               (0.14 to 0.41). The model runs live on AWS as a scoring API and an event-driven SQS pipeline, deployed with
-              Terraform from GitHub Actions, with CloudWatch monitoring and 17 automated tests.
+              Terraform from GitHub Actions, with CloudWatch monitoring and automated tests.
             </p>
-            <p class="tile__tech">Python · scikit-learn · Behavioural features · FastAPI · AWS Lambda · SQS · Terraform · GitHub Actions</p>
+            <p class="tile__text">
+              On top, a Claude agent investigates flagged transactions with five tools and drafts a recommendation for a
+              human analyst, with a policy guardrail in code. On 46 labelled cases it gave valid structured output every
+              time, agreed with the policy 98% of the time and resisted 6 of 6 prompt-injection attacks. The one miss,
+              caused by a rounded threshold in my own tool, was caught by the guardrail and fixed.
+            </p>
+            <p class="tile__tech">Python · Claude API · AI agents · scikit-learn · FastAPI · AWS Lambda · SQS · Terraform · GitHub Actions</p>
             <a class="link-more" href="projects/fraud/">Read the case study</a>
+            <a class="link-more" href="projects/fraud/#agent">The Claude agent</a>
             <a class="link-more" href="https://github.com/JeslyP/credit-card-fraud-detection" target="_blank" rel="noopener">View code</a>
             <a class="link-more" href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health" target="_blank" rel="noopener">Live API on AWS</a>
           </article>

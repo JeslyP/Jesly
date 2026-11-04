@@ -45,7 +45,7 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 <h2>Technical Skills</h2>
 <div class="skills">
 <p><b>Programming &amp; Data:</b> Python (Flask, Pandas, NumPy, Scikit-learn, PyTorch), Java, JavaScript/TypeScript (React, Next.js), SQL (T-SQL, PostgreSQL, MS SQL Server), Supabase</p>
-<p><b>Machine Learning &amp; Analytics:</b> Fraud detection, imbalanced classification (precision, recall, PR-AUC), predictive modelling (Logistic Regression, Gradient Boosting), clustering (K-Means), deep learning (CNNs, PyTorch), statistical analysis, ETL pipeline design</p>
+<p><b>Machine Learning &amp; Analytics:</b> Fraud detection, imbalanced classification (precision, recall, PR-AUC), predictive modelling (Logistic Regression, Gradient Boosting), clustering (K-Means), deep learning (CNNs, PyTorch), statistical analysis, ETL pipeline design, LLM agents (Claude API, tool use, structured output, guardrails, prompt-injection testing, LLM evaluation)</p>
 <p><b>Business &amp; Financial Analysis:</b> Financial reporting, revenue and cost analysis, KPI tracking, forecasting support, requirements gathering, business process mapping</p>
 <p><b>Cloud &amp; Engineering Practice:</b> AWS (Lambda, API Gateway, SQS, SNS, CloudWatch, ECR, S3, EC2), Terraform, Docker, Snowflake, Git, CI/CD pipelines, REST API design, automated testing, Agile delivery (Jira)</p>
 <p><b>Reporting &amp; AI Tools:</b> Tableau, Power BI, advanced Excel (pivot tables, complex formulas), PowerPoint, Power Apps and Power Automate, everyday use of AI tools (Claude, GitHub Copilot) for development and analysis</p>
@@ -92,13 +92,21 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 </div>
 
 <div class="entry"><h2>Projects</h2>
+<div class="row"><span>LLM Fraud Analyst Agent, Claude with Tool Use (Personal Project)</span><span class="date">November 2026</span></div>
+<p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection/tree/main/fraudagent", "github.com/JeslyP/credit-card-fraud-detection")} | {link("jeslyp.github.io/Jesly/projects/fraud/#agent", "Case study")}</p>
+<ul>
+<li>Built an agent in which Claude investigates a flagged transaction through 5 tools (transaction details, model score, exact score explanation, similar past cases, review policy) and drafts a structured, plain-English recommendation that a human analyst approves; a guardrail in code re-applies the written policy and customer notes are treated as untrusted.</li>
+<li>Evaluated it on 46 labelled cases: 100% valid structured output, 100% of model figures quoted correctly, 98% agreement with policy and 6 of 6 prompt-injection attacks resisted, at about 5 seconds per case. The evaluation exposed a rounded threshold that led the agent to clear a real fraud; the guardrail caught it, and I fixed the tool and added a regression test. CI logs in to Claude with short-lived federated tokens (Workload Identity Federation) instead of a stored API key.</li>
+</ul>
+</div>
+<div class="entry">
 <div class="row"><span>Fraud Detection: Models, Behavioural Features and Scoring Service (Personal Project)</span><span class="date">October 2026</span></div>
 <p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection")} | {link("jeslyp.github.io/Jesly/projects/fraud/", "Case study")} | <a href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health">Live API</a></p>
 <ul>
 <li>Built class-weighted logistic regression and gradient boosting models in scikit-learn on 284,807 card transactions (0.17% fraud), using a time-based split so the model was tested only on later transactions it had never seen.</li>
 <li>Caught 85% of fraud (63 of 74) while flagging just 0.5% of genuine transactions (PR-AUC 0.746); set the alert threshold by the cost of missed fraud versus manual review, cutting estimated fraud losses by 51%, and tracked recall over time to detect drift.</li>
 <li>On 6.3M PaySim payments, built behavioural features from each account's past activity (payee history, 24-hour velocity, new payees), which tripled PR-AUC from 0.14 to 0.41; excluded balance columns that leak the label.</li>
-<li>Deployed it live on AWS with Terraform from a one-click GitHub Actions pipeline: a FastAPI scoring API on Lambda and API Gateway, an event-driven SQS consumer publishing fraud alerts to SNS with a dead-letter queue, CloudWatch alarms and 17 automated tests.</li>
+<li>Deployed it live on AWS with Terraform from a one-click GitHub Actions pipeline: a FastAPI scoring API on Lambda and API Gateway, an event-driven SQS consumer publishing fraud alerts to SNS with a dead-letter queue, CloudWatch alarms and automated tests in CI.</li>
 </ul>
 </div>
 <div class="entry">
