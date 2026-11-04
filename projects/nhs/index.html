@@ -56,6 +56,12 @@
       <li>Wrote SQL reports with outer joins, for example hospitals per city, departments per hospital and preferred patients.</li>
     </ul>
 
+
+    <figure class="figure">
+      <a href="img/er-diagram.png" target="_blank" rel="noopener"><img src="img/er-diagram.png" alt="Entity-relationship diagram in Chen notation linking patients, appointments, departments, hospitals, professionals, prescriptions, billing, claims, surgery, tests and labs" width="1800" height="1456" loading="lazy" /></a>
+      <figcaption>The ER diagram I designed (Chen notation) before normalising the data into SQLite. Open the image to zoom in.</figcaption>
+    </figure>
+
     <h2>Fixing the question first</h2>
     <p>
       The original notebook filtered on a <code>No-Show</code> status, but the data doesn't have one: appointments are only

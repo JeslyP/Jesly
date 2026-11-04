@@ -47,6 +47,7 @@ pre { font-family: var(--mono); font-size: 14px; background: var(--tile); border
 
 .figure { background: var(--tile); border-radius: var(--radius); padding: 20px; margin: 0 0 14px; }
 .figure svg { display: block; width: 100%; height: auto; }
+.figure img { display: block; width: 100%; height: auto; border-radius: 10px; background: #fff; }
 .figure figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .fsm-node rect { fill: var(--bg); stroke: var(--divider); stroke-width: 1.5; }
 .fsm-node text { fill: var(--text); font: 600 12px var(--mono); }

@@ -50,6 +50,12 @@
       chase the same barrel or block each other, and everything runs against a clock.
     </p>
 
+
+    <figure class="figure">
+      <img src="img/arena-map.png" alt="Occupancy map of the simulated arena: a large square room joined by corridors to smaller rooms" width="1400" height="710" loading="lazy" />
+      <figcaption>The arena map the robots navigate with Nav2 (white is free space, black is walls).</figcaption>
+    </figure>
+
     <h2>How the controller works</h2>
     <p>
       Every robot runs its own <code>robot_controller</code> node, namespaced <code>robot1</code>, <code>robot2</code> and so on.
@@ -126,6 +132,12 @@
       accuracy stayed between 90 and 100% across them. The logs also showed where time was being lost, which led me to
       tune the decontamination threshold so robots didn't run out the clock on long sessions.
     </p>
+
+
+    <figure class="figure">
+      <img src="img/barrels-over-time.png" alt="Line chart of barrels collected over about three hours: Scenario 1 reaches 29, Scenario 2 reaches 30" width="880" height="418" loading="lazy" />
+      <figcaption>Barrels collected over two logged 3-hour runs, from the robots&#8217; own CSV logs. Collection stays steady for the whole run.</figcaption>
+    </figure>
 
     <h2>What I learned</h2>
     <div class="lesson"><h3>State machines keep autonomy debuggable.</h3><p>When a robot got stuck, the logged state told me exactly which behaviour was at fault, so fixes stayed local.</p></div>

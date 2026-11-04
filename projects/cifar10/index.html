@@ -47,6 +47,12 @@
       design and train my own network, without borrowing a model someone else had already trained, and to run on a CPU.
     </p>
 
+
+    <figure class="figure">
+      <img src="img/predictions.png" alt="Sixteen small CIFAR-10 test images with the model&#8217;s predicted labels; twelve correct in green and four mistakes in red" width="1320" height="396" loading="lazy" />
+      <figcaption>Real predictions from the trained model on test images it had never seen. Green is right; red shows what it guessed and what the image really was.</figcaption>
+    </figure>
+
     <h2>The model</h2>
     <p>Three convolution blocks pick out increasingly complex shapes, then two fully connected layers make the decision.</p>
     <pre>Conv 3→32   → BatchNorm → ReLU → MaxPool    32×32 → 16×16
@@ -85,6 +91,12 @@ Flatten (2,048) → Linear 256 → ReLU → Dropout 0.5 → Linear 10</pre>
       Vehicles and frogs are easy: they have distinctive shapes and colours. Cats are by far the hardest. At 32×32 pixels
       a cat, a dog and a small deer look very alike, so that's where most mistakes happen.
     </p>
+
+
+    <figure class="figure">
+      <img src="img/confusion.png" alt="Confusion matrix of actual versus predicted class for 10,000 test images, with a strong diagonal and the largest off-diagonal cell being cats predicted as dogs" width="770" height="660" loading="lazy" />
+      <figcaption>Confusion matrix. The biggest single mistake is cats labelled as dogs (222 of 1,000 cats).</figcaption>
+    </figure>
 
     <h2>What I'd do next</h2>
     <div class="lesson"><h3>Go deeper where it's weakest.</h3><p>A fourth convolution block or residual connections would help separate cats from dogs.</p></div>
