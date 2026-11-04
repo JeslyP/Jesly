@@ -79,3 +79,25 @@ footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--divide
   .stats { grid-template-columns: 1fr; }
   .cards { grid-template-columns: 1fr; }
 }
+
+/* ER diagram (NHS case study) */
+.er-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.er { display: block; width: 100%; min-width: 860px; height: auto; }
+.er-line { stroke: var(--faint); stroke-width: 1.4; fill: none; }
+.er-mark { stroke: var(--muted); stroke-width: 1.6; fill: none; stroke-linecap: round; }
+.er-box { fill: var(--bg); stroke: var(--divider); stroke-width: 1.2; }
+.er-title { font: 600 13px var(--font); fill: #fff; letter-spacing: 0; }
+.er-field { font: 11.5px var(--mono); fill: var(--text); }
+.er-pkname { font-weight: 700; }
+.er-key { font: 700 9.5px var(--font); letter-spacing: 0.04em; }
+.er-pk { fill: #b25000; }
+.er-fk { fill: var(--faint); }
+.er-org .er-head   { fill: #6e4fd8; }
+.er-care .er-head  { fill: #0071e3; }
+.er-clin .er-head  { fill: #1a7f37; }
+.er-pharm .er-head { fill: #b8336a; }
+.er-bill .er-head  { fill: #b25000; }
+[data-theme="dark"] .er-pk { fill: #ff9f0a; }
+.er-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; padding: 0; margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+.er-legend li { display: flex; align-items: center; gap: 6px; }
+.er-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }

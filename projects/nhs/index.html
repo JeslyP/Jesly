@@ -58,8 +58,293 @@
 
 
     <figure class="figure">
-      <a href="img/er-diagram.png" target="_blank" rel="noopener"><img src="img/er-diagram.png" alt="Entity-relationship diagram in Chen notation linking patients, appointments, departments, hospitals, professionals, prescriptions, billing, claims, surgery, tests and labs" width="1800" height="1456" loading="lazy" /></a>
-      <figcaption>The ER diagram I designed (Chen notation) before normalising the data into SQLite. Open the image to zoom in.</figcaption>
+      <div class="er-scroll">
+<svg class="er" viewBox="0 0 1420 905" role="img" aria-labelledby="er-title er-desc">
+<title id="er-title">NHS database schema (third normal form)</title>
+<desc id="er-desc">Seventeen tables in five groups: organisation (hospital, department, professional), patient care (patient, appointment, emergency contact), clinical (record, surgery, test, lab), pharmacy (prescription, prescription detail, medication, pharmacy) and billing (service billing, claim, insurance provider), joined by one-to-many relationships.</desc>
+<path class="er-line" d="M135.0 134.0 L135.0 250.0"/>
+<path class="er-mark" d="M128.0 146.0 L142.0 146.0"/>
+<path class="er-mark" d="M135.0 236.0 L143.0 250.0 M135.0 236.0 L135.0 250.0 M135.0 236.0 L127.0 250.0"/>
+<path class="er-line" d="M135.0 364.0 L135.0 480.0"/>
+<path class="er-mark" d="M128.0 376.0 L142.0 376.0"/>
+<path class="er-mark" d="M135.0 466.0 L143.0 480.0 M135.0 466.0 L135.0 480.0 M135.0 466.0 L127.0 480.0"/>
+<path class="er-line" d="M250.0 92.1 L310.0 99.9"/>
+<path class="er-mark" d="M261.0 100.6 L262.8 86.7"/>
+<path class="er-mark" d="M296.1 98.1 L311.0 92.0 M296.1 98.1 L310.0 99.9 M296.1 98.1 L309.0 107.9"/>
+<path class="er-line" d="M221.1 250.0 L310.0 191.1"/>
+<path class="er-mark" d="M235.0 249.2 L227.2 237.5"/>
+<path class="er-mark" d="M298.3 198.9 L305.6 184.5 M298.3 198.9 L310.0 191.1 M298.3 198.9 L314.4 197.8"/>
+<path class="er-line" d="M179.7 480.0 L361.2 210.0"/>
+<path class="er-mark" d="M192.2 473.9 L180.6 466.1"/>
+<path class="er-mark" d="M353.3 221.6 L354.5 205.5 M353.3 221.6 L361.2 210.0 M353.3 221.6 L367.8 214.5"/>
+<path class="er-line" d="M425.0 330.0 L425.0 210.0"/>
+<path class="er-mark" d="M432.0 318.0 L418.0 318.0"/>
+<path class="er-mark" d="M425.0 224.0 L417.0 210.0 M425.0 224.0 L425.0 210.0 M425.0 224.0 L433.0 210.0"/>
+<path class="er-line" d="M425.0 501.0 L425.0 590.0"/>
+<path class="er-mark" d="M418.0 513.0 L432.0 513.0"/>
+<path class="er-mark" d="M425.0 576.0 L433.0 590.0 M425.0 576.0 L425.0 590.0 M425.0 576.0 L417.0 590.0"/>
+<path class="er-line" d="M540.0 408.0 L600.0 404.0"/>
+<path class="er-mark" d="M552.4 414.2 L551.5 400.2"/>
+<path class="er-mark" d="M586.0 404.9 L599.5 396.1 M586.0 404.9 L600.0 404.0 M586.0 404.9 L600.5 412.0"/>
+<path class="er-line" d="M715.0 330.0 L715.0 153.0"/>
+<path class="er-mark" d="M722.0 318.0 L708.0 318.0"/>
+<path class="er-mark" d="M715.0 167.0 L707.0 153.0 M715.0 167.0 L715.0 153.0 M715.0 167.0 L723.0 153.0"/>
+<path class="er-line" d="M830.0 396.5 L890.0 396.5"/>
+<path class="er-mark" d="M842.0 403.5 L842.0 389.5"/>
+<path class="er-mark" d="M876.0 396.5 L890.0 388.5 M876.0 396.5 L890.0 396.5 M876.0 396.5 L890.0 404.5"/>
+<path class="er-line" d="M1170.0 408.6 L1120.0 404.9"/>
+<path class="er-mark" d="M1158.5 400.7 L1157.5 414.7"/>
+<path class="er-mark" d="M1134.0 405.9 L1119.4 412.9 M1134.0 405.9 L1120.0 404.9 M1134.0 405.9 L1120.6 396.9"/>
+<path class="er-line" d="M715.0 463.0 L715.0 590.0"/>
+<path class="er-mark" d="M708.0 475.0 L722.0 475.0"/>
+<path class="er-mark" d="M715.0 576.0 L723.0 590.0 M715.0 576.0 L715.0 590.0 M715.0 576.0 L707.0 590.0"/>
+<path class="er-line" d="M830.0 650.8 L890.0 652.7"/>
+<path class="er-mark" d="M841.8 658.2 L842.2 644.2"/>
+<path class="er-mark" d="M876.0 652.3 L890.3 644.7 M876.0 652.3 L890.0 652.7 M876.0 652.3 L889.7 660.7"/>
+<path class="er-line" d="M1170.0 656.5 L1120.0 656.5"/>
+<path class="er-mark" d="M1158.0 649.5 L1158.0 663.5"/>
+<path class="er-mark" d="M1134.0 656.5 L1120.0 664.5 M1134.0 656.5 L1120.0 656.5 M1134.0 656.5 L1120.0 648.5"/>
+<path class="er-line" d="M715.0 790.0 L715.0 704.0"/>
+<path class="er-mark" d="M722.0 778.0 L708.0 778.0"/>
+<path class="er-mark" d="M715.0 718.0 L707.0 704.0 M715.0 718.0 L715.0 704.0 M715.0 718.0 L723.0 704.0"/>
+<path class="er-line" d="M540.0 111.2 L890.0 99.8"/>
+<path class="er-mark" d="M552.2 117.8 L551.8 103.8"/>
+<path class="er-mark" d="M876.0 100.2 L889.7 91.8 M876.0 100.2 L890.0 99.8 M876.0 100.2 L890.3 107.8"/>
+<path class="er-line" d="M830.0 90.3 L890.0 92.2"/>
+<path class="er-mark" d="M841.8 97.7 L842.2 83.7"/>
+<path class="er-mark" d="M876.0 91.8 L890.3 84.2 M876.0 91.8 L890.0 92.2 M876.0 91.8 L889.7 100.2"/>
+<path class="er-line" d="M1005.0 330.0 L1005.0 172.0"/>
+<path class="er-mark" d="M1012.0 318.0 L998.0 318.0"/>
+<path class="er-mark" d="M1005.0 186.0 L997.0 172.0 M1005.0 186.0 L1005.0 172.0 M1005.0 186.0 L1013.0 172.0"/>
+<path class="er-line" d="M1120.0 96.0 L1170.0 96.0"/>
+<path class="er-mark" d="M1132.0 103.0 L1132.0 89.0"/>
+<path class="er-mark" d="M1156.0 96.0 L1170.0 88.0 M1156.0 96.0 L1170.0 96.0 M1156.0 96.0 L1170.0 104.0"/>
+<path class="er-line" d="M1285.0 200.0 L1285.0 172.0"/>
+<path class="er-mark" d="M1292.0 188.0 L1278.0 188.0"/>
+<path class="er-mark" d="M1285.0 186.0 L1277.0 172.0 M1285.0 186.0 L1285.0 172.0 M1285.0 186.0 L1293.0 172.0"/>
+<g class="er-ent er-org">
+<rect class="er-box" x="20" y="20" width="230" height="114" rx="10"/>
+<path class="er-head" d="M20 50 V30 a10 10 0 0 1 10 -10 H240 a10 10 0 0 1 10 10 V50 Z"/>
+<text class="er-title" x="32" y="40">Hospital</text>
+<text class="er-key er-pk" x="32" y="66">PK</text>
+<text class="er-field er-pkname" x="62" y="66">Hospital_ID</text>
+<text class="er-field" x="62" y="85">Hospital_Name</text>
+<text class="er-field" x="62" y="104">Hospital_Location</text>
+<text class="er-field" x="62" y="123">Hospital_Contact</text>
+</g>
+<g class="er-ent er-org">
+<rect class="er-box" x="20" y="250" width="230" height="114" rx="10"/>
+<path class="er-head" d="M20 280 V260 a10 10 0 0 1 10 -10 H240 a10 10 0 0 1 10 10 V280 Z"/>
+<text class="er-title" x="32" y="270">Department</text>
+<text class="er-key er-pk" x="32" y="296">PK</text>
+<text class="er-field er-pkname" x="62" y="296">Department_ID</text>
+<text class="er-key er-fk" x="32" y="315">FK</text>
+<text class="er-field" x="62" y="315">Hospital_ID</text>
+<text class="er-field" x="62" y="334">Department_Name</text>
+<text class="er-field" x="62" y="353">Head_Of_Department</text>
+</g>
+<g class="er-ent er-org">
+<rect class="er-box" x="20" y="480" width="230" height="133" rx="10"/>
+<path class="er-head" d="M20 510 V490 a10 10 0 0 1 10 -10 H240 a10 10 0 0 1 10 10 V510 Z"/>
+<text class="er-title" x="32" y="500">Professional</text>
+<text class="er-key er-pk" x="32" y="526">PK</text>
+<text class="er-field er-pkname" x="62" y="526">Professional_ID</text>
+<text class="er-key er-fk" x="32" y="545">FK</text>
+<text class="er-field" x="62" y="545">Department_ID</text>
+<text class="er-key er-fk" x="32" y="564">FK</text>
+<text class="er-field" x="62" y="564">Hospital_ID</text>
+<text class="er-field" x="62" y="583">Professional_Name</text>
+<text class="er-field" x="62" y="602">Professional_Role</text>
+</g>
+<g class="er-ent er-care">
+<rect class="er-box" x="310" y="20" width="230" height="190" rx="10"/>
+<path class="er-head" d="M310 50 V30 a10 10 0 0 1 10 -10 H530 a10 10 0 0 1 10 10 V50 Z"/>
+<text class="er-title" x="322" y="40">Appointment</text>
+<text class="er-key er-pk" x="322" y="66">PK</text>
+<text class="er-field er-pkname" x="352" y="66">Appointment_ID</text>
+<text class="er-key er-fk" x="322" y="85">FK</text>
+<text class="er-field" x="352" y="85">Patient_ID</text>
+<text class="er-key er-fk" x="322" y="104">FK</text>
+<text class="er-field" x="352" y="104">Hospital_ID</text>
+<text class="er-key er-fk" x="322" y="123">FK</text>
+<text class="er-field" x="352" y="123">Department_ID</text>
+<text class="er-key er-fk" x="322" y="142">FK</text>
+<text class="er-field" x="352" y="142">Professional_ID</text>
+<text class="er-field" x="352" y="161">Appointment_Date</text>
+<text class="er-field" x="352" y="180">Appointment_Time</text>
+<text class="er-field" x="352" y="199">Appointment_Status</text>
+</g>
+<g class="er-ent er-care">
+<rect class="er-box" x="310" y="330" width="230" height="171" rx="10"/>
+<path class="er-head" d="M310 360 V340 a10 10 0 0 1 10 -10 H530 a10 10 0 0 1 10 10 V360 Z"/>
+<text class="er-title" x="322" y="350">Patient</text>
+<text class="er-key er-pk" x="322" y="376">PK</text>
+<text class="er-field er-pkname" x="352" y="376">Patient_ID</text>
+<text class="er-key er-fk" x="322" y="395">FK</text>
+<text class="er-field" x="352" y="395">Preferred_Hospital_ID</text>
+<text class="er-key er-fk" x="322" y="414">FK</text>
+<text class="er-field" x="352" y="414">Preferred_Pharmacy_ID</text>
+<text class="er-key er-fk" x="322" y="433">FK</text>
+<text class="er-field" x="352" y="433">Preferred_Insurer_ID</text>
+<text class="er-field" x="352" y="452">Patient_Name</text>
+<text class="er-field" x="352" y="471">Patient_Date_Of_Birth</text>
+<text class="er-field" x="352" y="490">Patient_Gender</text>
+</g>
+<g class="er-ent er-care">
+<rect class="er-box" x="310" y="590" width="230" height="133" rx="10"/>
+<path class="er-head" d="M310 620 V600 a10 10 0 0 1 10 -10 H530 a10 10 0 0 1 10 10 V620 Z"/>
+<text class="er-title" x="322" y="610">Emergency_Contact</text>
+<text class="er-key er-pk" x="322" y="636">PK</text>
+<text class="er-field er-pkname" x="352" y="636">Emergency_Contact_ID</text>
+<text class="er-key er-fk" x="322" y="655">FK</text>
+<text class="er-field" x="352" y="655">Patient_ID</text>
+<text class="er-field" x="352" y="674">Contact_Name</text>
+<text class="er-field" x="352" y="693">Contact_Relationship</text>
+<text class="er-field" x="352" y="712">Contact_Phone</text>
+</g>
+<g class="er-ent er-clin">
+<rect class="er-box" x="600" y="330" width="230" height="133" rx="10"/>
+<path class="er-head" d="M600 360 V340 a10 10 0 0 1 10 -10 H820 a10 10 0 0 1 10 10 V360 Z"/>
+<text class="er-title" x="612" y="350">Record</text>
+<text class="er-key er-pk" x="612" y="376">PK</text>
+<text class="er-field er-pkname" x="642" y="376">Record_ID</text>
+<text class="er-key er-fk" x="612" y="395">FK</text>
+<text class="er-field" x="642" y="395">Patient_ID</text>
+<text class="er-key er-fk" x="612" y="414">FK</text>
+<text class="er-field" x="642" y="414">Professional_ID</text>
+<text class="er-field" x="642" y="433">Diagnosis</text>
+<text class="er-field" x="642" y="452">Notes</text>
+</g>
+<g class="er-ent er-clin">
+<rect class="er-box" x="600" y="20" width="230" height="133" rx="10"/>
+<path class="er-head" d="M600 50 V30 a10 10 0 0 1 10 -10 H820 a10 10 0 0 1 10 10 V50 Z"/>
+<text class="er-title" x="612" y="40">Surgery</text>
+<text class="er-key er-pk" x="612" y="66">PK</text>
+<text class="er-field er-pkname" x="642" y="66">Surgery_ID</text>
+<text class="er-key er-fk" x="612" y="85">FK</text>
+<text class="er-field" x="642" y="85">Record_ID</text>
+<text class="er-field" x="642" y="104">Surgery_Type</text>
+<text class="er-field" x="642" y="123">Surgery_Date</text>
+<text class="er-field" x="642" y="142">Surgery_Outcome</text>
+</g>
+<g class="er-ent er-clin">
+<rect class="er-box" x="890" y="330" width="230" height="133" rx="10"/>
+<path class="er-head" d="M890 360 V340 a10 10 0 0 1 10 -10 H1110 a10 10 0 0 1 10 10 V360 Z"/>
+<text class="er-title" x="902" y="350">Test</text>
+<text class="er-key er-pk" x="902" y="376">PK</text>
+<text class="er-field er-pkname" x="932" y="376">Test_ID</text>
+<text class="er-key er-fk" x="902" y="395">FK</text>
+<text class="er-field" x="932" y="395">Record_ID</text>
+<text class="er-key er-fk" x="902" y="414">FK</text>
+<text class="er-field" x="932" y="414">Lab_ID</text>
+<text class="er-field" x="932" y="433">Test_Name</text>
+<text class="er-field" x="932" y="452">Test_Date</text>
+</g>
+<g class="er-ent er-clin">
+<rect class="er-box" x="1170" y="360" width="230" height="114" rx="10"/>
+<path class="er-head" d="M1170 390 V370 a10 10 0 0 1 10 -10 H1390 a10 10 0 0 1 10 10 V390 Z"/>
+<text class="er-title" x="1182" y="380">Lab</text>
+<text class="er-key er-pk" x="1182" y="406">PK</text>
+<text class="er-field er-pkname" x="1212" y="406">Lab_ID</text>
+<text class="er-field" x="1212" y="425">Lab_Name</text>
+<text class="er-field" x="1212" y="444">Lab_Type</text>
+<text class="er-field" x="1212" y="463">Lab_Location</text>
+</g>
+<g class="er-ent er-bill">
+<rect class="er-box" x="890" y="20" width="230" height="152" rx="10"/>
+<path class="er-head" d="M890 50 V30 a10 10 0 0 1 10 -10 H1110 a10 10 0 0 1 10 10 V50 Z"/>
+<text class="er-title" x="902" y="40">Service_Billing</text>
+<text class="er-key er-pk" x="902" y="66">PK</text>
+<text class="er-field er-pkname" x="932" y="66">Service_Billing_ID</text>
+<text class="er-key er-fk" x="902" y="85">FK</text>
+<text class="er-field" x="932" y="85">Appointment_ID</text>
+<text class="er-key er-fk" x="902" y="104">FK</text>
+<text class="er-field" x="932" y="104">Surgery_ID</text>
+<text class="er-key er-fk" x="902" y="123">FK</text>
+<text class="er-field" x="932" y="123">Test_ID</text>
+<text class="er-field" x="932" y="142">Amount</text>
+<text class="er-field" x="932" y="161">Payment_Status</text>
+</g>
+<g class="er-ent er-bill">
+<rect class="er-box" x="1170" y="20" width="230" height="152" rx="10"/>
+<path class="er-head" d="M1170 50 V30 a10 10 0 0 1 10 -10 H1390 a10 10 0 0 1 10 10 V50 Z"/>
+<text class="er-title" x="1182" y="40">Claim</text>
+<text class="er-key er-pk" x="1182" y="66">PK</text>
+<text class="er-field er-pkname" x="1212" y="66">Claim_ID</text>
+<text class="er-key er-fk" x="1182" y="85">FK</text>
+<text class="er-field" x="1212" y="85">Service_Billing_ID</text>
+<text class="er-key er-fk" x="1182" y="104">FK</text>
+<text class="er-field" x="1212" y="104">Insurance_Provider_ID</text>
+<text class="er-field" x="1212" y="123">Claim_Status</text>
+<text class="er-field" x="1212" y="142">Claim_Amount</text>
+<text class="er-field" x="1212" y="161">Approved_Amount</text>
+</g>
+<g class="er-ent er-pharm">
+<rect class="er-box" x="600" y="590" width="230" height="114" rx="10"/>
+<path class="er-head" d="M600 620 V600 a10 10 0 0 1 10 -10 H820 a10 10 0 0 1 10 10 V620 Z"/>
+<text class="er-title" x="612" y="610">Prescription</text>
+<text class="er-key er-pk" x="612" y="636">PK</text>
+<text class="er-field er-pkname" x="642" y="636">Prescription_ID</text>
+<text class="er-key er-fk" x="612" y="655">FK</text>
+<text class="er-field" x="642" y="655">Record_ID</text>
+<text class="er-key er-fk" x="612" y="674">FK</text>
+<text class="er-field" x="642" y="674">Pharmacy_ID</text>
+<text class="er-key er-fk" x="612" y="693">FK</text>
+<text class="er-field" x="642" y="693">Professional_ID</text>
+</g>
+<g class="er-ent er-pharm">
+<rect class="er-box" x="890" y="590" width="230" height="133" rx="10"/>
+<path class="er-head" d="M890 620 V600 a10 10 0 0 1 10 -10 H1110 a10 10 0 0 1 10 10 V620 Z"/>
+<text class="er-title" x="902" y="610">Prescription_Detail</text>
+<text class="er-key er-pk" x="902" y="636">PK</text>
+<text class="er-field er-pkname" x="932" y="636">Prescription_Detail_ID</text>
+<text class="er-key er-fk" x="902" y="655">FK</text>
+<text class="er-field" x="932" y="655">Prescription_ID</text>
+<text class="er-key er-fk" x="902" y="674">FK</text>
+<text class="er-field" x="932" y="674">Medication_ID</text>
+<text class="er-field" x="932" y="693">Medication_Dosage</text>
+<text class="er-field" x="932" y="712">Medication_Quantity</text>
+</g>
+<g class="er-ent er-pharm">
+<rect class="er-box" x="1170" y="590" width="230" height="133" rx="10"/>
+<path class="er-head" d="M1170 620 V600 a10 10 0 0 1 10 -10 H1390 a10 10 0 0 1 10 10 V620 Z"/>
+<text class="er-title" x="1182" y="610">Medication</text>
+<text class="er-key er-pk" x="1182" y="636">PK</text>
+<text class="er-field er-pkname" x="1212" y="636">Medication_ID</text>
+<text class="er-field" x="1212" y="655">Medication_Name</text>
+<text class="er-field" x="1212" y="674">Manufacturer</text>
+<text class="er-field" x="1212" y="693">Medication_Strength</text>
+<text class="er-field" x="1212" y="712">Medication_Price</text>
+</g>
+<g class="er-ent er-pharm">
+<rect class="er-box" x="600" y="790" width="230" height="95" rx="10"/>
+<path class="er-head" d="M600 820 V800 a10 10 0 0 1 10 -10 H820 a10 10 0 0 1 10 10 V820 Z"/>
+<text class="er-title" x="612" y="810">Pharmacy</text>
+<text class="er-key er-pk" x="612" y="836">PK</text>
+<text class="er-field er-pkname" x="642" y="836">Pharmacy_ID</text>
+<text class="er-field" x="642" y="855">Pharmacy_Name</text>
+<text class="er-field" x="642" y="874">Pharmacy_Location</text>
+</g>
+<g class="er-ent er-bill">
+<rect class="er-box" x="1170" y="200" width="230" height="95" rx="10"/>
+<path class="er-head" d="M1170 230 V210 a10 10 0 0 1 10 -10 H1390 a10 10 0 0 1 10 10 V230 Z"/>
+<text class="er-title" x="1182" y="220">Insurance_Provider</text>
+<text class="er-key er-pk" x="1182" y="246">PK</text>
+<text class="er-field er-pkname" x="1212" y="246">Insurance_Provider_ID</text>
+<text class="er-field" x="1212" y="265">Provider_Name</text>
+<text class="er-field" x="1212" y="284">Coverage_Type</text>
+</g>
+</svg>
+      </div>
+      <ul class="er-legend" aria-label="Table groups">
+        <li><i style="background:#6e4fd8"></i>Organisation</li>
+        <li><i style="background:#0071e3"></i>Patient care</li>
+        <li><i style="background:#1a7f37"></i>Clinical</li>
+        <li><i style="background:#b8336a"></i>Pharmacy</li>
+        <li><i style="background:#b25000"></i>Billing</li>
+        <li>Lines are one-to-many: a single bar is the "one" side, the fork is the "many" side.</li>
+      </ul>
+      <figcaption>The database schema after normalising to third normal form: 17 tables, with primary keys (PK) and foreign keys (FK). I originally designed it as an ER diagram in Chen notation; <a href="img/er-diagram.png" target="_blank" rel="noopener">view the original</a>.</figcaption>
     </figure>
 
     <h2>Fixing the question first</h2>
