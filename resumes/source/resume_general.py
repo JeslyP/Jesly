@@ -93,7 +93,7 @@ li {{ margin: 0.5pt 0; break-inside: avoid; }}
 
 <div class="entry"><h2>Projects</h2>
 <div class="row"><span>LLM Fraud Analyst Agent, Claude with Tool Use (Personal Project)</span><span class="date">November 2026</span></div>
-<p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection/tree/main/fraudagent", "github.com/JeslyP/credit-card-fraud-detection")} | {link("jeslyp.github.io/Jesly/projects/fraud/#agent", "Case study")}</p>
+<p class="sub">{link("github.com/JeslyP/credit-card-fraud-detection/tree/main/fraudagent", "github.com/JeslyP/credit-card-fraud-detection")} | {link("jeslyp.github.io/Jesly/projects/fraud/#agent", "Case study")} | <a href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/demo">Live demo</a></p>
 <ul>
 <li>Built an agent in which Claude investigates a flagged transaction through 5 tools (transaction details, model score, exact score explanation, similar past cases, review policy) and drafts a structured, plain-English recommendation that a human analyst approves; a guardrail in code re-applies the written policy and customer notes are treated as untrusted.</li>
 <li>Evaluated it on 46 labelled cases: 100% valid structured output, 100% of model figures quoted correctly, 98% agreement with policy and 6 of 6 prompt-injection attacks resisted, at about 5 seconds per case. The evaluation exposed a rounded threshold that led the agent to clear a real fraud; the guardrail caught it, and I fixed the tool and added a regression test. CI logs in to Claude with short-lived federated tokens (Workload Identity Federation) instead of a stored API key.</li>

@@ -36,6 +36,7 @@
       <a class="link-more" href="https://github.com/JeslyP/credit-card-fraud-detection" target="_blank" rel="noopener">View the code</a>
       <a class="link-more" href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/health" target="_blank" rel="noopener">Live API health check</a>
       <a class="link-more" href="#agent">The Claude agent</a>
+      <a class="link-more" href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/demo" target="_blank" rel="noopener">Live agent demo</a>
     </div>
 
     <ul class="stats">
@@ -209,9 +210,21 @@
       wasn't wrong; my tool was. I fixed it to show exact cut-offs and added a test built from that case.
     </p>
     <p>
+      You can see the agent's reviews of 18 demo cases, including two real frauds where I planted a note telling it to clear them, on the
+      <a href="https://iilsazxkuj.execute-api.eu-west-2.amazonaws.com/demo" target="_blank" rel="noopener">live demo page</a>.
       The agent follows the model and the policy, so it explains and triages; it can't catch fraud the model scores low.
       The evaluation sample was stratified (caught fraud, missed fraud, false alarms, clean genuine and injection attacks),
       so its escalation rates reflect the sample, not real-world performance.
+    </p>
+
+    <h3>The same review as a Claude Skill</h3>
+    <p>
+      Most teams need AI in the tools they already use, not another app. So I also packaged the review as a
+      <strong>Claude Skill</strong>: an analyst uploads it in the Claude app and asks, for example, "review case DEMO-018".
+      A script inside the Skill carries the model as plain numbers, gathers the same evidence and gives the policy's
+      minimum recommendation; Claude writes the case note and may be stricter than the policy, never less strict.
+      It needs no code, no server and no API key, and an automated test checks it gives exactly the same scores and
+      reasons as the deployed agent.
     </p>
 
     <h2>What I learned</h2>
